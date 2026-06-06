@@ -51,3 +51,8 @@
 
 **信号**: `ModuleNotFoundError: No module named 'ntops'`  
 **修复**: `cd <ntops-root> && pip install -e .`
+
+## FC-011: gelu 参考内核无 application()
+
+**信号**: `reference missing application()`（旧版 compare_ref）  
+**修复**: 已支持 `default_application`；更新 `compare_ref.py` 后重跑 `forge gate`
