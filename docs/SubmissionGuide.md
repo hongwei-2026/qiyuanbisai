@@ -22,7 +22,7 @@
 | 字段 | 填什么 |
 |------|--------|
 | **Github 仓库** | `https://github.com/hongwei-2026/qiyuanbisai` |
-| **Commit 链接** | `https://github.com/hongwei-2026/qiyuanbisai/commit/d3c7590` |
+| **Commit 链接** | `https://github.com/hongwei-2026/qiyuanbisai/commit/c22fbcc` |
 | **附件 zip** | 运行 `python scripts/pack_submission.py --stage initial` 生成 |
 
 > 初赛**不需要 PR**。代码提交载体以后续赛题组通知为准；当前以**独立 skill 仓库 + commit + zip** 提交。
