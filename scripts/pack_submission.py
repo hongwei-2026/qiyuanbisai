@@ -26,11 +26,16 @@ def iter_stage_include(stage: str) -> list[str]:
     return [
         *COMMON_INCLUDE,
         "docs/Proposal.md",
+        "docs/MidTermReport.md",
+        "docs/SelfTestPlan.md",
+        "docs/SubmissionGuide.md",
         "docs/InitialRound.md",
         "docs/GPU_Test_Report.md",
         "docs/ab_runs.csv",
         "docs/AB_Report.md",
         "docs/Forge_Design.md",
+        "docs/forge_runs.jsonl",
+        "docs/screenshots",
     ]
 
 

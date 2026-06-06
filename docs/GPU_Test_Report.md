@@ -43,7 +43,23 @@ cd /root/work/ntops && pytest -q tests/test_add.py   # add: 8 passed
 - **不要**运行 `pytest tests/` 全量：上游 `conv2d` 在当前 Triton 环境可能失败，与 skill 无关。
 - 使用任务卡 `pytest_file`（v0.5）或 `tests/test_<op>.py` 做精准测试。
 
+## v1.0 forge gate（最终验收）
+
+```bash
+python scripts/forge.py gate --ntops-root /root/work/ntops
+```
+
+| 算子 | GUARD compare_ref | pytest | 结果 |
+|------|-------------------|--------|------|
+| silu | matches reference | 8 passed | OK |
+| add | matches reference | 8 passed | OK |
+| gelu | matches reference | 8 passed | OK |
+
+**GATE OK: all operators passed**（约 17s 总耗时）
+
+截图：`docs/screenshots/forge-gate-gpu-test.png`
+
 ## 结论
 
-- `ntops-copilot` 在 GPU 环境完成 v0.4 任务卡驱动公式注入、语义对照、pytest 闭环验收。
-- silu/add 官方测试各 8/8 通过，可作为初赛「可实现」证据。
+- `ntops-forge` + `ntops-copilot` 在 GPU 环境完成工厂流水线验收。
+- silu/add/gelu 官方测试均通过，可作为初赛「可实现」证据。

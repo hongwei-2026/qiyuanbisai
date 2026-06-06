@@ -70,13 +70,16 @@ python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
 python scripts/pack_submission.py --stage initial
 ```
 
-## 提交大赛表单时填写
+## 初赛提交（详见 `docs/SubmissionGuide.md`）
 
 | 字段 | 填什么 |
 |------|--------|
 | Github 仓库 | `https://github.com/hongwei-2026/qiyuanbisai` |
-| PR 链接 **或** Commit 链接 | 任选其一（建议用含 `skills/ntops-copilot` 的 commit） |
-| 附件 | 运行 `python scripts/pack_submission.py --stage initial` 生成的 zip |
+| Commit 链接 | `https://github.com/hongwei-2026/qiyuanbisai/commit/44609366160dbb61aa79c4a4cb3ab6af9a75e1d7` |
+| 附件 zip | `python scripts/pack_submission.py --stage initial` → `submission-initial-*.zip` |
+| 中期报告 PDF | 由 `docs/MidTermReport.md` 导出为 `于鸿伟_九齿skill创新挑战_中期报告.pdf` |
+
+> 初赛**不需要 PR**；提交载体以后续赛题组通知为准。
 
 ## 目录
 
