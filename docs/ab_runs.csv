@@ -1,0 +1,5 @@
+mode,task,preflight_pass,pytest_pass,steps,intervention_count,elapsed_seconds
+baseline,silu,true,not_run,0,0,0
+treatment,silu,true,not_run,0,0,0
+baseline,add,true,not_run,0,0,0
+treatment,add,true,not_run,0,0,0
