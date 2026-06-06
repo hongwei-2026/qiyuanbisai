@@ -75,7 +75,7 @@ python scripts/pack_submission.py --stage initial
 | 字段 | 填什么 |
 |------|--------|
 | Github 仓库 | `https://github.com/hongwei-2026/qiyuanbisai` |
-| Commit 链接 | `https://github.com/hongwei-2026/qiyuanbisai/commit/44609366160dbb61aa79c4a4cb3ab6af9a75e1d7` |
+| Commit 链接 | `https://github.com/hongwei-2026/qiyuanbisai/commit/d3c7590` |
 | 附件 zip | `python scripts/pack_submission.py --stage initial` → `submission-initial-*.zip` |
 | 中期报告 PDF | 由 `docs/MidTermReport.md` 导出为 `于鸿伟_九齿skill创新挑战_中期报告.pdf` |
 
