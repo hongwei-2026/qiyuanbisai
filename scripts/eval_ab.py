@@ -67,7 +67,14 @@ def safe_rate(numer: float, denom: float) -> Optional[float]:
 def summarize(rows: list[Row], mode: str) -> dict[str, Optional[float]]:
     items = [r for r in rows if r.mode == mode]
     if not items:
-        raise ValueError(f"no rows found for mode={mode}")
+        return {
+            "count": 0,
+            "preflight_rate": None,
+            "pytest_rate": None,
+            "avg_steps": 0.0,
+            "avg_intervention": 0.0,
+            "avg_elapsed_seconds": 0.0,
+        }
     total = len(items)
     pytest_items = [r for r in items if r.pytest_pass is not None]
     pytest_total = len(pytest_items)
@@ -98,6 +105,8 @@ def main() -> None:
     rows = load_rows(args.input)
     baseline = summarize(rows, "baseline")
     treatment = summarize(rows, "treatment")
+    if treatment["count"] == 0:
+        print("WARN: no treatment rows; run `forge gate` then re-run eval_ab")
 
     def delta_rate(a: Optional[float], b: Optional[float]) -> str:
         if a is None or b is None:

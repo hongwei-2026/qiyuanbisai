@@ -66,9 +66,14 @@ PLAN → CODEGEN → GUARD → PROVE → SHIP
 
 1. **工厂流水线**：同类方案多只有 Markdown；本方案 PLAN→SHIP 每段有输入/输出与失败路由（`fix_cards`）。  
 2. **语义对照护栏**：`compare_ref` 对齐官方内核（含 gelu `default_application` 特例）。  
-3. **可复现评测协议**：Baseline vs Treatment 已实测——Treatment pytest 100%、步骤 1 vs 6、人工介入 0 vs 4（见 `docs/AB_Report.md`）。
+3. **可复现评测协议**：`run_baseline_demo.py` + `forge gate` 生成 A/B 证据——pytest 100%、步骤 1 vs 6、介入 0 vs 4。  
+4. **五算子 gate**：silu / add / gelu / relu / mul 一键回归（覆盖 unary + binary）。
 
-### 2.5 不做什么（保证能落地）
+### 2.5 与同类方案对比
+
+详见 `docs/CompetitiveAnalysis.md`。核心差异：**文档型 Skill → 可执行工厂 + 双护栏 + jsonl 审计 + 五算子 gate**。
+
+### 2.6 不做什么（保证能落地）
 
 - 不依赖自建云服务；初赛起使用大赛算力即可。  
 - 不在 Proposal 阶段承诺完成 50 个算子；聚焦 **流程与工具**，初赛迭代任务卡与脚本。  
@@ -93,7 +98,7 @@ PLAN → CODEGEN → GUARD → PROVE → SHIP
 | 时间 | 目标 |
 |------|------|
 | Proposal（05/21） | 本仓库、skill v0.1、zip 提交 |
-| 初赛（06/08） | forge v1.0 + gate 三算子 GPU 实测 + A/B 首轮对照 |
+| 初赛（06/08） | forge v1.0 + gate 五算子 GPU 实测 + A/B 可复现脚本 |
 | 决赛（07/13） | 对接组委会标准任务集；优化 SKILL 触发词与错误表 |
 
 ---
@@ -102,12 +107,12 @@ PLAN → CODEGEN → GUARD → PROVE → SHIP
 
 | 指标 | 目标 | 实测（RTX 4080 / AutoDL） |
 |------|------|---------------------------|
-| preflight 合法内核 | 100% 通过 | ✅ silu/add/gelu |
-| preflight 拒绝 Triton | 100% 拒绝 | ✅ Baseline 0% |
+| preflight 合法内核 | 100% 通过 | ✅ 五算子 |
+| preflight 拒绝 Triton | 100% 拒绝 | ✅ run_baseline_demo |
 | compare_ref 一致率 | 100% | ✅ matches reference |
 | pytest 通过率 | Treatment > Baseline | ✅ 100% vs 未跑通 |
-| 单算子流水线耗时 | < 30 s | ✅ ~6 s |
-| gate 三算子 | 全通过 | ✅ GATE OK |
+| 单算子流水线耗时 | < 30 s | ✅ ~7 s |
+| gate 五算子 | 全通过 | ✅ GATE OK（GPU 复现） |
 
 ---
 

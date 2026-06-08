@@ -375,7 +375,7 @@ def run_pipeline(args: argparse.Namespace) -> int:
 
 
 def cmd_gate(args: argparse.Namespace) -> int:
-    """Run forge pipeline for default demo ops (silu, add, gelu)."""
+    """Run forge pipeline for default demo ops (silu, add, gelu, relu, mul)."""
     ops = [x.strip() for x in args.ops.split(",") if x.strip()]
     print(f"=== FORGE GATE: {', '.join(ops)} ===")
     failed: list[str] = []
@@ -435,10 +435,10 @@ def main() -> int:
     diag_p.add_argument("--text")
     diag_p.add_argument("--log", type=Path, default=FORGE_LOG)
 
-    gate_p = sub.add_parser("gate", help="demo gate: run silu,add,gelu sequentially")
+    gate_p = sub.add_parser("gate", help="demo gate: run silu,add,gelu,relu,mul sequentially")
     gate_p.add_argument("--ntops-root", type=Path)
     gate_p.add_argument("--skill-root", type=Path, default=ROOT)
-    gate_p.add_argument("--ops", default="silu,add,gelu", help="comma-separated ops")
+    gate_p.add_argument("--ops", default="silu,add,gelu,relu,mul", help="comma-separated ops")
     gate_p.add_argument("--force", action="store_true")
     gate_p.add_argument("--register", action="store_true")
     gate_p.add_argument("--no-record-ab", action="store_true")

@@ -22,7 +22,7 @@
 
 本作品交付 **ntops-forge**（v1.0，主作品）与 **ntops-copilot**（v0.5，轻量备选）双 Skill 套件，核心创新是将 Agent 写 ntops 算子的过程从「散文化手册」升级为 **PLAN→CODEGEN→GUARD→PROVE→SHIP 五段可执行工厂流水线**，配套 16+ 脚本、12 张 GPU 实测截图、jsonl 审计与 A/B 量化证据。
 
-在 RTX 4080 环境，`forge gate` 一键验收 silu / add / gelu 三算子：每算子 pytest 8/8 通过、单算子约 7 秒。相对无 Skill 基线，preflight 通过率 0%→100%，平均步骤 6→1，人工介入 4 次→0 次。
+在 RTX 4080 环境，`forge gate` 一键验收 **五算子**（silu / add / gelu / relu / mul）：每算子 pytest 8/8 通过、单算子约 7 秒。`run_baseline_demo.py` 提供可复现无 Skill 基线证据；相对 Baseline，preflight 0%→100%，步骤 6→1，人工介入 4→0。
 
 **关键词**：算子工厂、可执行 Skill、语义对照、A/B 量化、GPU 实测
 
@@ -54,6 +54,7 @@
 | C5 | **失败诊断 fix_cards** | 报错后不知怎修 | FC-001/004/012 自动匹配 |
 | C6 | **jsonl 全链路审计** | 无法复现 Agent 过程 | 每阶段 ok+耗时可追溯 |
 | C7 | **自然语言生成 spec** | 新算子规格起草慢 | NL→YAML spec 秒级生成 |
+| C8 | **五算子 gate 回归** | 覆盖算子少、难服评委 | silu/add/gelu/relu/mul 一键验收 |
 
 **与文档型 Skill 的本质差异**：同类作品多只有 SKILL.md；本作品把规范落到 **可运行脚本链**，失败在秒级本地/GPU 前移到 GUARD，而非推到 CI 才暴露。
 

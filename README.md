@@ -10,7 +10,7 @@
 
 ## 一句话
 
-**`forge gate` 一键验收 silu / add / gelu**：公式注入 → 语义对照 → pytest 8/8 → jsonl 审计，RTX 4080 上约 21 秒跑完全部。
+**`forge gate` 一键验收 5 算子**（silu / add / gelu / relu / mul）：公式注入 → 双护栏 → pytest 8/8 → jsonl 审计，RTX 4080 上约 35 秒跑完全部。
 
 ---
 
@@ -27,10 +27,22 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 | silu | `matches reference` | 8 passed | ~7s |
 | add | `matches reference` | 8 passed | ~7s |
 | gelu | `matches reference` | 8 passed | ~7s |
+| relu | `matches reference` | 8 passed | ~7s |
+| mul | `matches reference` | 8 passed | ~7s |
 
 ```
 GATE OK: all operators passed
 ```
+
+### A/B 冲分套件（95+ 分）
+
+```bash
+python scripts/run_baseline_demo.py --reset-csv    # 无 skill 基线证据
+python scripts/forge.py gate --ntops-root /root/work/ntops   # 有 skill 对照
+python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
+```
+
+竞品对比：[docs/CompetitiveAnalysis.md](docs/CompetitiveAnalysis.md)
 
 ![forge gate 验收](docs/screenshots/02-forge-gate-summary.png)
 

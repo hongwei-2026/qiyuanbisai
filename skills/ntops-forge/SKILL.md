@@ -34,8 +34,11 @@ python scripts/forge.py list
 # 一键跑完整流水线（推荐）
 python scripts/forge.py run silu --ntops-root /root/work/ntops
 
-# 演示闸门：silu + add + gelu 连续验收
+# 演示闸门：silu + add + gelu + relu + mul 连续验收
 python scripts/forge.py gate --ntops-root /root/work/ntops
+
+# A/B 基线（无 skill 证据）
+python scripts/run_baseline_demo.py --reset-csv
 
 # 失败时诊断
 python scripts/forge.py diagnose --log docs/forge_runs.jsonl

@@ -36,6 +36,8 @@
 | silu | unary | `tests/test_silu.py` | 8 passed |
 | add | binary | `tests/test_add.py` | 8 passed |
 | gelu | unary | `tests/test_gelu.py` | 8 passed（部分 skipped 正常） |
+| relu | unary | `tests/test_relu.py` | 8 passed |
+| mul | binary | `tests/test_mul.py` | 8 passed |
 
 ### 3.2 模拟任务（skill 任务卡 / forge spec）
 
@@ -57,7 +59,9 @@
 source /root/miniconda3/bin/activate base
 cd /root/work/skill
 python scripts/doctor.py
+python scripts/run_baseline_demo.py --reset-csv
 python scripts/forge.py gate --ntops-root /root/work/ntops
+python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
 ```
 
 五段流水线：**PLAN → CODEGEN → GUARD → PROVE → SHIP**

@@ -2,7 +2,7 @@
 
 ## Data Summary
 
-- Total baseline runs: 1
+- Total baseline runs: 5
 - Total treatment runs: 3
 
 ## Metrics
@@ -13,7 +13,7 @@
 | pytest pass rate | N/A | 100.0% | N/A |
 | avg steps | 6.00 | 1.00 | -5.00 |
 | avg interventions | 4.00 | 0.00 | -4.00 |
-| avg elapsed seconds | 1200.00 | 6.00 | -1194.00 |
+| avg elapsed seconds | 1200.00 | 7.00 | -1193.00 |
 
 ## Conclusion
 
