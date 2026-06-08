@@ -68,6 +68,14 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 截图：`docs/screenshots/16-gate-ab-5v5-final.png`（gate + A/B 同屏）  
 数据：`docs/ab_runs.csv`、`docs/AB_Report.md`
 
+## silu benchmark（RTX 4080 · 2026-06-08）
+
+| 指标 | PyTorch | ntops | 比值 |
+|------|---------|-------|------|
+| 4096×4096 fp16 | 0.0523 ms | 0.0715 ms | 1.37× |
+
+截图：`docs/screenshots/17-bench-silu-gpu.png` · 数据：`docs/bench_silu.json`
+
 ## 注意事项
 
 - **不要**运行 `pytest tests/` 全量：上游 `conv2d` 可能失败，与 skill 无关。

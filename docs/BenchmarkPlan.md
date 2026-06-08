@@ -18,25 +18,21 @@
 
 ---
 
-## 任务 B：silu GPU kernel 计时（决赛执行）
+## 任务 B：silu GPU kernel 计时 ✅ 已实测（2026-06-08）
 
-```bash
-source /root/miniconda3/bin/activate base
-cd /root/work/skill
-python scripts/bench_op.py --op silu --ntops-root /root/work/ntops \
-  --shape 4096,4096 --warmup 10 --repeat 50
-```
-
-记录项：
-
-| 字段 | 说明 |
+| 字段 | 结果 |
 |------|------|
-| 输入规模 | 如 `(4096, 4096)` float16 |
-| 基线 | `torch.nn.functional.silu` 或 ntops.torch 官方路径 |
-| Treatment | forge 生成内核经 ntops 调用 |
-| 结论 | 无明显回退 / 回退比例 |
+| 环境 | AutoDL · RTX 4080 |
+| 输入规模 | `(4096, 4096)` float16 |
+| PyTorch `F.silu` | **0.0523 ms** |
+| ntops.torch.silu | **0.0715 ms** |
+| 比值 ntops/PyTorch | **1.37×**（同量级，无数量级回退） |
 
-输出：`docs/bench_silu.json`（脚本自动生成）
+数据：`docs/bench_silu.json` · 截图：`docs/screenshots/17-bench-silu-gpu.png`
+
+**结论**：官方 ntops silu 与 PyTorch 基线同量级；本 skill 重点在 **正确性闭环与开发效率**，非内核极限调优。ratio ~1.37 在 fp16 大矩阵下可接受，决赛可针对 generated source / tile 配置进一步优化。
+
+复现命令见 `docs/CloudRun.md` §4。
 
 ---
 

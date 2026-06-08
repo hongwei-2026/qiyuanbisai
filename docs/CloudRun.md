@@ -125,3 +125,4 @@ PY
 | `No module named ntops` | `pip install -e /root/work/ntops` |
 | treatment 只有 3 条 | 重跑方式 B ①④，确保 for 循环 5 个算子 |
 | conv2d 失败 | 不要跑全量 `pytest tests/`，只用 `forge gate` |
+| `can't open bench_op.py` | 用本文 **§4 方式 B** 内联 Python，或 `git pull` |

@@ -82,7 +82,7 @@
 | skills/ntops-forge/ | SKILL.md, specs/, taxonomy.md, fix_cards.md |
 | skills/ntops-copilot/ | SKILL.md, tasks/, formulas.md |
 | scripts/ | forge.py 等 16 个可执行脚本 |
-| docs/screenshots/ | 16 张 GPU 实测截图（本报告附图，含最终 5v5 验收） |
+| docs/screenshots/ | 17 张 GPU 实测截图（本报告附图，含 5v5 验收与 benchmark） |
 
 ![图1 五段流水线架构](screenshots/forge-pipeline-arch.png)
 
@@ -308,9 +308,13 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 | 逐元素/广播 | ✅ 五算子 gate | 图15、AB_Report |
 | 归约/分块 | 📋 softmax spec | `specs/softmax.yaml`、`FinalsRoadmap.md` |
 | 布局 stride | 📋 max_pool2d spec | `specs/max_pool2d.yaml` |
-| 性能/诊断 | ✅ A/B 耗时 + fix_cards | `BenchmarkPlan.md`、`bench_op.py` |
+| 性能/诊断 | ✅ A/B 耗时 + silu benchmark | `bench_silu.json`、图17 |
 
 完整示例：`skills/ntops-forge/examples/silu_walkthrough.md`
+
+![图17 silu benchmark GPU 实测](screenshots/17-bench-silu-gpu.png)
+
+**图17** silu 4096×4096 fp16：PyTorch 0.0523 ms vs ntops 0.0715 ms（ratio 1.37×，同量级无数量级回退）
 
 ## 十四、后续可维护计划
 

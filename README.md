@@ -46,7 +46,7 @@ bash scripts/run_ab_manual.sh /root/work/ntops
 
 预期：`5 baseline vs 5 treatment` + `GATE OK`。云机完整说明：[docs/CloudRun.md](docs/CloudRun.md)
 
-优化说明：[docs/OptimizationSummary.md](docs/OptimizationSummary.md) · 竞品对比：[docs/CompetitiveAnalysis.md](docs/CompetitiveAnalysis.md)
+优化说明：[docs/OptimizationSummary.md](docs/OptimizationSummary.md) · Benchmark：[docs/BenchmarkPlan.md](docs/BenchmarkPlan.md)（silu 0.052/0.072 ms）
 
 ![五算子 GATE OK + A/B 5v5 最终验收](docs/screenshots/16-gate-ab-5v5-final.png)
 

@@ -60,7 +60,7 @@
 | 任务 | 初赛 | 决赛 | 文档 |
 |------|------|------|------|
 | 流水线耗时 A/B | ✅ 5v5 完成 | 维持 | `docs/AB_Report.md` |
-| silu kernel 计时 | — | 执行 | `docs/BenchmarkPlan.md` + `scripts/bench_op.py` |
+| silu kernel 计时 | ✅ 0.052/0.072 ms | 扩展多 shape | `bench_silu.json`、图17 |
 | 失败诊断 | ✅ fix_cards | 扩展 | `skills/ntops-forge/fix_cards.md` |
 
 ### 3.5 任务卡 / forge spec
