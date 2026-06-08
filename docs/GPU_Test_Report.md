@@ -25,7 +25,7 @@ cd /root/work/skill
 python scripts/doctor.py
 ```
 
-## v1.0 forge gate（最终验收）
+## v1.0 forge gate（最终验收 · 五算子）
 
 ```bash
 python scripts/forge.py gate --ntops-root /root/work/ntops
@@ -33,11 +33,13 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 
 | 算子 | GUARD compare_ref | pytest | 单算子耗时 | 结果 |
 |------|-------------------|--------|------------|------|
-| silu | matches reference | 8 passed | ~6.8s | OK |
-| add | matches reference | 8 passed | ~7.0s | OK |
-| gelu | matches reference | 8 passed, 8 skipped | ~6.9s | OK |
+| silu | matches reference | 8 passed | 6.7s | OK |
+| add | matches reference | 8 passed | 6.9s | OK |
+| gelu | matches reference | 8 passed, 8 skipped | 7.0s | OK |
+| relu | matches reference | 16 passed | 10.9s | OK |
+| mul | matches reference | 8 passed | 12.5s | OK |
 
-**GATE OK: all operators passed**（三算子合计约 21s）
+**GATE OK: all operators passed**（五算子合计约 44s）
 
 截图：
 - `docs/screenshots/02-forge-gate-summary.png`
