@@ -19,7 +19,7 @@
 
 | 环境 | 用途 | 配置 |
 |------|------|------|
-| **GPU 主环境** | 正确性结论 | SeetaCloud / AutoDL，RTX 4090，conda `base` |
+| **GPU 主环境** | 正确性结论 | AutoDL，RTX 4080，conda `base` |
 | **CPU 对照** | 安装/结构检查 | 华为 CPU 机（pytest 因无 CUDA 跳过） |
 | **本地 Windows** | 脚本/preflight | 无 triton，不跑 ntops pytest |
 
@@ -59,9 +59,7 @@
 source /root/miniconda3/bin/activate base
 cd /root/work/skill
 python scripts/doctor.py
-python scripts/run_baseline_demo.py --reset-csv
-python scripts/forge.py gate --ntops-root /root/work/ntops
-python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
+python scripts/run_ab_suite.py --ntops-root /root/work/ntops
 ```
 
 五段流水线：**PLAN → CODEGEN → GUARD → PROVE → SHIP**

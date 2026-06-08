@@ -34,15 +34,14 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 GATE OK: all operators passed
 ```
 
-### A/B 冲分套件（95+ 分）
+### A/B 一键套件（推荐）
 
 ```bash
-python scripts/run_baseline_demo.py --reset-csv    # 无 skill 基线证据
-python scripts/forge.py gate --ntops-root /root/work/ntops   # 有 skill 对照
-python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
+python scripts/run_ab_suite.py --ntops-root /root/work/ntops
+cat docs/AB_Report.md   # 预期 5 baseline vs 5 treatment
 ```
 
-竞品对比：[docs/CompetitiveAnalysis.md](docs/CompetitiveAnalysis.md)
+优化说明：[docs/OptimizationSummary.md](docs/OptimizationSummary.md) · 竞品对比：[docs/CompetitiveAnalysis.md](docs/CompetitiveAnalysis.md)
 
 ![forge gate 验收](docs/screenshots/02-forge-gate-summary.png)
 

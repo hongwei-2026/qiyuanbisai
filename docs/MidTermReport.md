@@ -47,7 +47,7 @@
 
 | 编号 | 创新点 | 解决的问题 | 可验证证据 |
 |------|--------|------------|------------|
-| C1 | **五段工厂流水线** | Agent 命令零散、易漏步骤 | forge gate 一键跑通三算子 |
+| C1 | **五段工厂流水线** | Agent 命令零散、易漏步骤 | forge gate 一键跑通五算子 |
 | C2 | **规格驱动公式注入** | 手写 application 易错 | spec formula 自动写入内核 |
 | C3 | **语义对照护栏** | 公式写对但语义不一致 | compare_ref matches reference |
 | C4 | **结构护栏 preflight** | Triton 稿混入交卷 | Triton 5 项 FAIL / forge OK |
@@ -126,11 +126,11 @@
 
 ![图4 一键 gate 三算子验收](screenshots/02-forge-gate-summary.png)
 
-**图4** forge gate：silu / add / gelu 汇总 GATE OK
+**图4** forge gate：silu / add / gelu / relu / mul 五算子 GATE OK
 
 ![图5 gelu 流水线与 gate 汇总](screenshots/13-forge-gate-gelu-pipeline.png)
 
-**图5** gelu 含 default_application 特例，三算子 gate 全部 OK
+**图5** gelu 含 default_application 特例；五算子 gate 汇总全部通过
 
 ---
 
@@ -174,7 +174,7 @@ forge_diagnose 将错误文本映射到 FC-xxx 修复动作，降低人工查文
 
 ![图10 jsonl 审计日志](screenshots/07-forge-audit-jsonl.png)
 
-**图10** silu/add/gelu 三算子 jsonl 五阶段 ok:true
+**图10** 五算子 jsonl 五阶段 ok:true
 
 ### 创新点 C7：自然语言生成 spec + 仓库结构
 
@@ -186,7 +186,7 @@ forge_diagnose 将错误文本映射到 FC-xxx 修复动作，降低人工查文
 
 ![图12 仓库结构与 demo 日志](screenshots/11-forge-spec-and-repo-structure.png)
 
-**图12** skills/scripts 目录 + forge list 三算子
+**图12** skills/scripts 目录 + forge list 五算子
 
 ![图13 批量演示日志可复现](screenshots/12-demo-logs-batch.png)
 
@@ -296,7 +296,8 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 | 提交项 | 链接 |
 |--------|------|
 | Github | https://github.com/hongwei-2026/qiyuanbisai |
-| Commit | https://github.com/hongwei-2026/qiyuanbisai/commit/8a7be7e |
+| Commit | https://github.com/hongwei-2026/qiyuanbisai/commit/21d8ae3 |
+| 优化说明 | docs/OptimizationSummary.md |
 
 ---
 

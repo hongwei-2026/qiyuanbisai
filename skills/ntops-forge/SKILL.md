@@ -37,8 +37,8 @@ python scripts/forge.py run silu --ntops-root /root/work/ntops
 # 演示闸门：silu + add + gelu + relu + mul 连续验收
 python scripts/forge.py gate --ntops-root /root/work/ntops
 
-# A/B 基线（无 skill 证据）
-python scripts/run_baseline_demo.py --reset-csv
+# A/B 一键（baseline + gate + 报告）
+python scripts/run_ab_suite.py --ntops-root /root/work/ntops
 
 # 失败时诊断
 python scripts/forge.py diagnose --log docs/forge_runs.jsonl
