@@ -37,9 +37,14 @@ GATE OK: all operators passed
 ### A/B 一键套件（推荐）
 
 ```bash
+# 已 git pull 最新代码
 python scripts/run_ab_suite.py --ntops-root /root/work/ntops
-cat docs/AB_Report.md   # 预期 5 baseline vs 5 treatment
+
+# 云机尚未同步时（无 run_ab_suite.py）
+bash scripts/run_ab_manual.sh /root/work/ntops
 ```
+
+预期：`5 baseline vs 5 treatment` + `GATE OK`。云机完整说明：[docs/CloudRun.md](docs/CloudRun.md)
 
 优化说明：[docs/OptimizationSummary.md](docs/OptimizationSummary.md) · 竞品对比：[docs/CompetitiveAnalysis.md](docs/CompetitiveAnalysis.md)
 
@@ -182,6 +187,8 @@ skills/
     SKILL.md, tasks/, formulas.md
 scripts/
   forge.py              # 主流水线 + gate
+  run_ab_suite.py       # A/B 一键（Python）
+  run_ab_manual.sh      # A/B 一键（bash 回退）
   run_task.py           # copilot 一键流
   compare_ref.py        # 语义对照
   preflight.py          # 结构护栏

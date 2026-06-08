@@ -22,7 +22,7 @@
 | 字段 | 填什么 |
 |------|--------|
 | **Github 仓库** | `https://github.com/hongwei-2026/qiyuanbisai` |
-| **Commit 链接** | `https://github.com/hongwei-2026/qiyuanbisai/commit/21d8ae3` |
+| **Commit 链接** | `https://github.com/hongwei-2026/qiyuanbisai/commit/main`（推送后替换为最新 commit） |
 | **附件 zip** | `submission-initial-20260608.zip`（运行 `pack_submission.py` 可重新生成） |
 
 > 初赛**不需要 PR**。代码提交载体以后续赛题组通知为准；当前以**独立 skill 仓库 + commit + zip** 提交。
@@ -45,4 +45,4 @@ python scripts/pack_submission.py --stage initial
 
 ## 答辩一句话
 
-> **ntops-forge** 在 RTX 4080 上 `forge gate` 一键验收 silu/add/gelu：公式注入、语义对照、pytest 8/8 通过，A/B 步骤 6→1、人工介入 4→0，全程 jsonl 可审计。
+> **ntops-forge** 在 RTX 4080 上 `forge gate` 一键验收五算子（silu/add/gelu/relu/mul）：公式注入、语义对照、pytest 全通过，A/B 步骤 6→1、人工介入 4→0，全程 jsonl 可审计。

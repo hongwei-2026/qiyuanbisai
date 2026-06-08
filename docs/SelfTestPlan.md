@@ -59,7 +59,7 @@
 source /root/miniconda3/bin/activate base
 cd /root/work/skill
 python scripts/doctor.py
-python scripts/run_ab_suite.py --ntops-root /root/work/ntops
+bash scripts/run_ab_manual.sh /root/work/ntops   # 或 git pull 后用 run_ab_suite.py
 ```
 
 五段流水线：**PLAN → CODEGEN → GUARD → PROVE → SHIP**
@@ -72,10 +72,10 @@ GUARD 检查项：`preflight --strict` + `compare_ref matches reference`
 
 | 指标 | Baseline（无 skill） | Treatment（有 skill） | 记录方式 |
 |------|---------------------|----------------------|----------|
-| preflight 通过率 | 待补 1 轮对照 | **100%**（silu/add/gelu） | `ab_runs.csv` |
+| preflight 通过率 | **0%**（5 算子） | **100%**（5 算子） | `ab_runs.csv` |
 | pytest 通过率 | 未跑通 | **100%**（8/8 per op） | GPU 日志 |
-| 人工介入次数 | **4 次**（估） | **0 次**（gate 一键） | `ab_runs.csv` |
-| 端到端耗时 | — | **~5.7s/算子**，gate ~17s | `forge_runs.jsonl` |
+| 人工介入次数 | **4 次** | **0 次**（gate 一键） | `ab_runs.csv` |
+| 端到端耗时 | **~1200s** | **~7s/算子**，gate ~35s | `forge_runs.jsonl` |
 | 结构错误拦截 | Triton/缺 premake | preflight **100% 拒绝** | 脚本实测 |
 
 汇总命令：

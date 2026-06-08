@@ -57,11 +57,18 @@ GATE OK: all operators passed
 
 ## 一键复现（云机）
 
+云机若无 `run_ab_suite.py`，用 bash 回退：
+
 ```bash
 source /root/miniconda3/bin/activate base
 cd /root/work/skill
-python scripts/run_ab_suite.py --ntops-root /root/work/ntops
-cat docs/AB_Report.md
+bash scripts/run_ab_manual.sh /root/work/ntops
 ```
 
-预期：`5 baseline / 5 treatment` + `GATE OK: all operators passed`
+`git pull` 后可用：
+
+```bash
+python scripts/run_ab_suite.py --ntops-root /root/work/ntops
+```
+
+预期：`5 baseline / 5 treatment` + `GATE OK: all operators passed`。详见 [CloudRun.md](CloudRun.md)。
