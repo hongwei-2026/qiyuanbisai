@@ -1,185 +1,240 @@
 #!/usr/bin/env python3
-"""Convert markdown report to PDF with Chinese text and embedded images."""
+"""Convert markdown report to PDF (ReportLab, Chinese + tables + images)."""
 from __future__ import annotations
 
 import argparse
 import re
 from pathlib import Path
 
-from fpdf import FPDF
+from PIL import Image as PILImage
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_LEFT
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.units import cm
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import (
+    Image as RLImage,
+    PageBreak,
+    Paragraph,
+    SimpleDocTemplate,
+    Spacer,
+    Table,
+    TableStyle,
+)
 
-try:
-    from PIL import Image
-except ImportError:
-    Image = None  # type: ignore
-
-FONT = Path("C:/Windows/Fonts/simhei.ttf")
-IMG_RE = re.compile(r"^!\[(.*?)\]\((.+?)\)\s*$")
-CAPTION_RE = re.compile(r"^\*\*(图\d+[^*]*)\*\*\s*(.*)$")
+FONT_PATH = Path("C:/Windows/Fonts/simhei.ttf")
+FONT = "SimHei"
+PAGE_W, PAGE_H = A4
+CONTENT_W = PAGE_W - 3.6 * cm
 
 
-class ReportPDF(FPDF):
-    def footer(self):
-        self.set_y(-12)
-        self.set_font("hei", size=9)
-        self.set_text_color(120, 120, 120)
-        self.cell(0, 8, f"- {self.page_no()} -", align="C")
+def _register_font() -> None:
+    if not FONT_PATH.is_file():
+        raise FileNotFoundError(f"Font not found: {FONT_PATH}")
+    pdfmetrics.registerFont(TTFont(FONT, str(FONT_PATH)))
 
 
-def _clean(text: str) -> str:
-    text = text.replace("**", "")
+def _esc(text: str) -> str:
+    text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    text = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
+    text = text.replace("`", "")
     text = text.replace("−", "-").replace("–", "-").replace("—", "-")
-    for a, b in [("✅", "[OK]"), ("🔄", "[进行中]"), ("⏳", "[待办]"), ("•", "-")]:
-        text = text.replace(a, b)
     return text
 
 
-def _mc(pdf: ReportPDF, h: float, text: str, size: int = 10, color=(30, 30, 30)) -> None:
-    pdf.set_font("hei", size=size)
-    pdf.set_text_color(*color)
-    pdf.multi_cell(pdf.epw, h, _clean(text))
+def _styles() -> dict[str, ParagraphStyle]:
+    base = dict(fontName=FONT, alignment=TA_LEFT)
+    return {
+        "title": ParagraphStyle("title", fontSize=18, leading=24, spaceAfter=10, **base),
+        "meta": ParagraphStyle("meta", fontSize=10, leading=14, textColor=colors.HexColor("#333"), **base),
+        "h2": ParagraphStyle("h2", fontSize=14, leading=20, spaceBefore=14, spaceAfter=8, **base),
+        "h3": ParagraphStyle("h3", fontSize=11, leading=16, spaceBefore=8, spaceAfter=4, **base),
+        "body": ParagraphStyle("body", fontSize=10, leading=15, spaceAfter=6, **base),
+        "caption": ParagraphStyle(
+            "caption", fontSize=9, leading=12, textColor=colors.HexColor("#555"), spaceAfter=8, **base
+        ),
+        "code": ParagraphStyle(
+            "code",
+            fontSize=8,
+            leading=11,
+            backColor=colors.HexColor("#f5f5f5"),
+            leftIndent=6,
+            spaceAfter=6,
+            **base,
+        ),
+    }
 
 
-def _image_size(img_path: Path, max_w: float, max_h: float) -> tuple[float, float]:
-    if Image is None:
-        return max_w, max_h * 0.6
-    with Image.open(img_path) as im:
+def _parse_table_row(line: str) -> list[str]:
+    return [c.strip() for c in line.strip().strip("|").split("|")]
+
+
+def _is_table_sep(line: str) -> bool:
+    return bool(re.match(r"^\|[\s\-:|]+\|\s*$", line))
+
+
+def _make_image(path: Path, max_w: float = CONTENT_W, max_h: float = 11 * cm) -> RLImage:
+    with PILImage.open(path) as im:
         w, h = im.size
-    ratio = h / w if w else 1.0
-    dw = max_w
-    dh = dw * ratio
-    if dh > max_h:
-        dh = max_h
-        dw = dh / ratio if ratio else max_w
-    return dw, dh
+    ratio = h / w if w else 1
+    width = max_w
+    height = width * ratio
+    if height > max_h:
+        height = max_h
+        width = height / ratio
+    return RLImage(str(path), width=width, height=height)
 
 
-def _embed_image(pdf: ReportPDF, img_path: Path, caption: str = "") -> None:
-    if not img_path.is_file():
-        _mc(pdf, 6, f"[图片缺失: {img_path.name}]", color=(180, 0, 0))
-        return
-
-    dw, dh = _image_size(img_path, pdf.epw, 155)
-    need = dh + (14 if caption else 6)
-    if pdf.get_y() + need > pdf.h - pdf.b_margin:
-        pdf.add_page()
-
-    pdf.ln(2)
-    x = pdf.l_margin
-    y = pdf.get_y()
-    pdf.image(str(img_path), x=x, y=y, w=dw, h=dh)
-    pdf.set_y(y + dh + 2)
-    if caption:
-        _mc(pdf, 5, caption, size=9, color=(80, 80, 80))
-    pdf.ln(4)
-
-
-def write_line(pdf: ReportPDF, line: str, base_dir: Path, in_code: list[bool]) -> None:
-    line = line.rstrip()
-
-    if line.startswith("```"):
-        in_code[0] = not in_code[0]
-        if in_code[0]:
-            pdf.ln(2)
-            pdf.set_fill_color(248, 248, 248)
-        else:
-            pdf.ln(2)
-        return
-
-    if in_code[0]:
-        if line:
-            pdf.set_font("hei", size=8)
-            pdf.set_text_color(40, 40, 40)
-            pdf.set_fill_color(248, 248, 248)
-            pdf.multi_cell(pdf.epw, 4.5, _clean(line), fill=True)
-        return
-
-    if not line:
-        pdf.ln(2)
-        return
-
-    m_img = IMG_RE.match(line)
-    if m_img:
-        alt, rel = m_img.group(1), m_img.group(2)
-        _embed_image(pdf, (base_dir / rel).resolve(), alt)
-        return
-
-    m_cap = CAPTION_RE.match(line)
-    if m_cap:
-        _mc(pdf, 5, f"{m_cap.group(1)} {m_cap.group(2)}".strip(), size=9, color=(80, 80, 80))
-        return
-
-    if line.startswith("# "):
-        pdf.add_page()
-        pdf.ln(4)
-        _mc(pdf, 12, line[2:].strip(), size=18, color=(15, 15, 15))
-        pdf.ln(3)
-        return
-
-    if line.startswith("## "):
-        if pdf.get_y() > 240:
-            pdf.add_page()
-        pdf.ln(4)
-        _mc(pdf, 9, line[3:].strip(), size=14, color=(25, 25, 25))
-        pdf.ln(2)
-        return
-
-    if line.startswith("### "):
-        pdf.ln(2)
-        _mc(pdf, 7, line[4:].strip(), size=11, color=(35, 35, 35))
-        pdf.ln(1)
-        return
-
-    if line.startswith("> "):
-        _mc(pdf, 6, line[2:].strip(), size=9, color=(70, 70, 70))
-        return
-
-    if line.strip() == "---":
-        pdf.ln(2)
-        pdf.set_draw_color(200, 200, 200)
-        y = pdf.get_y()
-        pdf.line(pdf.l_margin, y, pdf.w - pdf.r_margin, y)
-        pdf.ln(4)
-        return
-
-    if line.startswith("|") and "---" not in line:
-        cells = [c.strip() for c in line.strip("|").split("|")]
-        _mc(pdf, 5, " | ".join(cells), size=8)
-        return
-
-    if line.startswith("|") and "---" in line:
-        return
-
-    if line.startswith("- "):
-        _mc(pdf, 5, "  * " + line[2:].strip())
-        return
-
-    if re.match(r"^\d+\.\s", line):
-        _mc(pdf, 5, line.strip())
-        return
-
-    _mc(pdf, 5, line)
+def _table_flowable(rows: list[list[str]], st: dict[str, ParagraphStyle]) -> Table:
+    ncols = len(rows[0])
+    col_w = CONTENT_W / ncols
+    data = [[Paragraph(_esc(c), st["body"]) for c in row] for row in rows]
+    tbl = Table(data, colWidths=[col_w] * ncols, repeatRows=1)
+    tbl.setStyle(
+        TableStyle(
+            [
+                ("FONT", (0, 0), (-1, -1), FONT, 9),
+                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#eeeeee")),
+                ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#cccccc")),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 5),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 5),
+                ("TOPPADDING", (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ]
+        )
+    )
+    return tbl
 
 
 def convert(md_path: Path, out_path: Path) -> None:
-    if not FONT.is_file():
-        raise FileNotFoundError(f"Chinese font not found: {FONT}")
-
+    _register_font()
+    st = _styles()
     base_dir = md_path.parent
-    pdf = ReportPDF(orientation="P", unit="mm", format="A4")
-    pdf.set_auto_page_break(auto=True, margin=16)
-    pdf.set_left_margin(18)
-    pdf.set_right_margin(18)
-    pdf.set_top_margin(16)
-    pdf.add_page()
-    pdf.add_font("hei", "", str(FONT))
+    story: list = []
 
-    in_code = [False]
-    for line in md_path.read_text(encoding="utf-8").splitlines():
-        write_line(pdf, line, base_dir, in_code)
+    lines = md_path.read_text(encoding="utf-8").splitlines()
+    i = 0
+    in_code = False
+    code_buf: list[str] = []
+    first_h1 = True
+
+    while i < len(lines):
+        line = lines[i].rstrip()
+
+        if line.startswith("```"):
+            if in_code:
+                story.append(Paragraph(_esc("\n".join(code_buf)), st["code"]))
+                code_buf = []
+                in_code = False
+            else:
+                in_code = True
+            i += 1
+            continue
+
+        if in_code:
+            code_buf.append(line)
+            i += 1
+            continue
+
+        # table block
+        if line.startswith("|"):
+            table_rows: list[list[str]] = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                if not _is_table_sep(lines[i]):
+                    table_rows.append(_parse_table_row(lines[i]))
+                i += 1
+            if table_rows:
+                story.append(Spacer(1, 4))
+                story.append(_table_flowable(table_rows, st))
+                story.append(Spacer(1, 8))
+            continue
+
+        m_img = re.match(r"^!\[(.*?)\]\((.+?)\)\s*$", line)
+        if m_img:
+            alt, rel = m_img.group(1), m_img.group(2)
+            img_path = (base_dir / rel).resolve()
+            if img_path.is_file():
+                story.append(Spacer(1, 6))
+                story.append(_make_image(img_path))
+                story.append(Paragraph(_esc(alt), st["caption"]))
+            else:
+                story.append(Paragraph(f"[图片缺失: {rel}]", st["body"]))
+            i += 1
+            continue
+
+        m_cap = re.match(r"^\*\*(图\d+[^*]*)\*\*\s*(.*)$", line)
+        if m_cap:
+            story.append(Paragraph(_esc(f"{m_cap.group(1)} {m_cap.group(2)}"), st["caption"]))
+            i += 1
+            continue
+
+        if line.startswith("# "):
+            if not first_h1:
+                story.append(PageBreak())
+            first_h1 = False
+            story.append(Paragraph(_esc(line[2:].strip()), st["title"]))
+            i += 1
+            continue
+
+        if line.startswith("## "):
+            story.append(Spacer(1, 6))
+            story.append(Paragraph(_esc(line[3:].strip()), st["h2"]))
+            i += 1
+            continue
+
+        if line.startswith("### "):
+            story.append(Paragraph(_esc(line[4:].strip()), st["h3"]))
+            i += 1
+            continue
+
+        if line.startswith("> "):
+            story.append(Paragraph(_esc(line[2:].strip()), st["meta"]))
+            i += 1
+            continue
+
+        if line.strip() == "---":
+            story.append(Spacer(1, 8))
+            i += 1
+            continue
+
+        if line.startswith("- "):
+            story.append(Paragraph(f"&bull; {_esc(line[2:].strip())}", st["body"]))
+            i += 1
+            continue
+
+        if re.match(r"^\d+\.\s", line):
+            story.append(Paragraph(_esc(line.strip()), st["body"]))
+            i += 1
+            continue
+
+        if line.strip():
+            story.append(Paragraph(_esc(line.strip()), st["body"]))
+
+        i += 1
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    pdf.output(str(out_path))
+    doc = SimpleDocTemplate(
+        str(out_path),
+        pagesize=A4,
+        leftMargin=1.8 * cm,
+        rightMargin=1.8 * cm,
+        topMargin=2 * cm,
+        bottomMargin=2 * cm,
+        title="中期报告",
+        author="于鸿伟",
+    )
+
+    def _footer(canvas, _doc):
+        canvas.saveState()
+        canvas.setFont(FONT, 9)
+        canvas.setFillColor(colors.grey)
+        canvas.drawCentredString(PAGE_W / 2, 1.2 * cm, f"- {canvas.getPageNumber()} -")
+        canvas.restoreState()
+
+    doc.build(story, onFirstPage=_footer, onLaterPages=_footer)
 
 
 def main() -> None:
