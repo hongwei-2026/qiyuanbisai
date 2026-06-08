@@ -297,7 +297,7 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 | 提交项 | 链接 |
 |--------|------|
 | Github | https://github.com/hongwei-2026/qiyuanbisai |
-| Commit | https://github.com/hongwei-2026/qiyuanbisai/commit/71cabaa |
+| Commit | https://github.com/hongwei-2026/qiyuanbisai/commit/e7b32bb |
 | 优化说明 | docs/OptimizationSummary.md |
 
 ---

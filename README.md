@@ -162,7 +162,7 @@ python scripts/run_task.py --task silu --ntops-root /path/to/ntops --finish
 | Proposal | [docs/Proposal.md](docs/Proposal.md) |
 | .skill 初版 | [skills/ntops-forge/](skills/ntops-forge/) + [skills/ntops-copilot/](skills/ntops-copilot/) |
 | 自测计划 | [docs/SelfTestPlan.md](docs/SelfTestPlan.md) |
-| 中期报告 PDF | `docs/于鸿伟_九齿skill创新挑战_中期报告.pdf`（17 图） |
+| 中期报告 PDF | `docs/于鸿伟_九齿skill创新挑战_中期报告.pdf`（19 图） |
 | 评分对照 | [docs/ScoringAlignment.md](docs/ScoringAlignment.md) |
 | 四类自测 | [docs/selftests/](docs/selftests/) |
 | 功能演示 | [docs/DemoShowcase.md](docs/DemoShowcase.md) |
@@ -173,7 +173,8 @@ python scripts/run_task.py --task silu --ntops-root /path/to/ntops --finish
 | 字段 | 内容 |
 |------|------|
 | Github 仓库 | https://github.com/hongwei-2026/qiyuanbisai |
-| 附件 zip | `python scripts/pack_submission.py --stage initial` |
+| Commit 链接 | https://github.com/hongwei-2026/qiyuanbisai/commit/e7b32bb |
+| 附件 zip | `submission-initial-20260608.zip` |
 
 > 初赛**不需要 PR**。完整说明：[docs/SubmissionGuide.md](docs/SubmissionGuide.md)
 
