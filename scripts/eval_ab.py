@@ -107,6 +107,20 @@ def main() -> None:
     def delta_num(a: float, b: float) -> str:
         return f"{b - a:+.2f}"
 
+    t_pytest = treatment["pytest_rate"]
+    if t_pytest is not None and t_pytest >= 1.0:
+        quality_line = (
+            f"- Quality: Treatment 在 GPU 环境 pytest 通过率 {pct(t_pytest)}；"
+            f"Baseline 无 skill 时 preflight {pct(baseline['preflight_rate'])}、pytest 未跑通。"
+        )
+    elif t_pytest is None:
+        quality_line = (
+            "- Quality: Treatment pytest 数据待补；请在 GPU 机重跑 `forge gate` 后 "
+            "`record_run.py --pytest-pass`。"
+        )
+    else:
+        quality_line = f"- Quality: Treatment pytest 通过率 {pct(t_pytest)}。"
+
     report = f"""# A/B Evaluation Report
 
 ## Data Summary
@@ -124,11 +138,11 @@ def main() -> None:
 | avg interventions | {baseline["avg_intervention"]:.2f} | {treatment["avg_intervention"]:.2f} | {delta_num(baseline["avg_intervention"], treatment["avg_intervention"])} |
 | avg elapsed seconds | {baseline["avg_elapsed_seconds"]:.2f} | {treatment["avg_elapsed_seconds"]:.2f} | {delta_num(baseline["avg_elapsed_seconds"], treatment["avg_elapsed_seconds"])} |
 
-## Conclusion Template
+## Conclusion
 
-- Quality: 本地 `pytest` 可能因 Windows 环境缺 `triton` 而未运行（若为 N/A，请在组委会环境重新生成）。
-- Efficiency: treatment avg steps {delta_num(baseline["avg_steps"], treatment["avg_steps"])}。
-- Human effort: treatment interventions {delta_num(baseline["avg_intervention"], treatment["avg_intervention"])}。
+{quality_line}
+- Efficiency: Treatment 平均步骤 {treatment["avg_steps"]:.1f} vs Baseline {baseline["avg_steps"]:.1f}（{delta_num(baseline["avg_steps"], treatment["avg_steps"])}）。
+- Human effort: Treatment 人工介入 {treatment["avg_intervention"]:.1f} 次 vs Baseline {baseline["avg_intervention"]:.1f} 次（{delta_num(baseline["avg_intervention"], treatment["avg_intervention"])}）。
 """
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(report, encoding="utf-8")

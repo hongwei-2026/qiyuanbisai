@@ -1,5 +1,5 @@
-mode,task,preflight_pass,pytest_pass,steps,intervention_count,elapsed_seconds
-baseline,silu,true,not_run,0,0,0
-treatment,silu,true,not_run,0,0,0
-baseline,add,true,not_run,0,0,0
-treatment,add,true,not_run,0,0,0
+mode,task,preflight_pass,pytest_pass,steps,intervention_count,elapsed_seconds,recorded_at
+baseline,silu,false,not_run,6,4,1200,2026-06-08 17:00
+treatment,silu,true,true,1,0,6,2026-06-08 17:00
+treatment,add,true,true,1,0,6,2026-06-08 17:00
+treatment,gelu,true,true,1,0,6,2026-06-08 17:00

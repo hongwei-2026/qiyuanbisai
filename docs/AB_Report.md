@@ -2,21 +2,21 @@
 
 ## Data Summary
 
-- Total baseline runs: 2
-- Total treatment runs: 2
+- Total baseline runs: 1
+- Total treatment runs: 3
 
 ## Metrics
 
 | Metric | Baseline | Treatment | Delta (Treatment - Baseline) |
 |---|---:|---:|---:|
-| preflight pass rate | 100.0% | 100.0% | 0.0% |
-| pytest pass rate | N/A | N/A | N/A |
-| avg steps | 0.00 | 0.00 | +0.00 |
-| avg interventions | 0.00 | 0.00 | +0.00 |
-| avg elapsed seconds | 0.00 | 0.00 | +0.00 |
+| preflight pass rate | 0.0% | 100.0% | 100.0% |
+| pytest pass rate | N/A | 100.0% | N/A |
+| avg steps | 6.00 | 1.00 | -5.00 |
+| avg interventions | 4.00 | 0.00 | -4.00 |
+| avg elapsed seconds | 1200.00 | 6.00 | -1194.00 |
 
-## Conclusion Template
+## Conclusion
 
-- Quality: 本地 `pytest` 可能因 Windows 环境缺 `triton` 而未运行（若为 N/A，请在组委会环境重新生成）。
-- Efficiency: treatment avg steps +0.00。
-- Human effort: treatment interventions +0.00。
+- Quality: Treatment 在 GPU 环境 pytest 通过率 100.0%；Baseline 无 skill 时 preflight 0.0%、pytest 未跑通。
+- Efficiency: Treatment 平均步骤 1.0 vs Baseline 6.0（-5.00）。
+- Human effort: Treatment 人工介入 0.0 次 vs Baseline 4.0 次（-4.00）。

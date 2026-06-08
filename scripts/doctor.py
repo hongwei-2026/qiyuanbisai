@@ -43,6 +43,9 @@ def main() -> int:
     ]:
         if has_module(mod):
             ok(f"{label} importable")
+        elif mod == "pytest":
+            fail(f"{label} not installed (pip install pytest)")
+            errors += 1
         else:
             warn(f"{label} not installed")
 

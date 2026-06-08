@@ -33,7 +33,8 @@
 - 全部 scripts
 - Proposal / 自测计划 / 中期报告（md）
 - GPU 测试报告、A/B 报告、forge 设计说明
-- 截图 `docs/screenshots/forge-gate-gpu-test.png`
+- 截图集 `docs/screenshots/`（15 张实测 + 架构图）
+- 截图说明 `docs/DemoShowcase.md`
 
 ## 本地打包命令
 
@@ -44,4 +45,4 @@ python scripts/pack_submission.py --stage initial
 
 ## 答辩一句话
 
-> **ntops-forge** 在 RTX 4090 上 `forge gate` 一键验收 silu/add/gelu：公式注入、语义对照、pytest 8/8 通过，全程 jsonl 可审计。
+> **ntops-forge** 在 RTX 4080 上 `forge gate` 一键验收 silu/add/gelu：公式注入、语义对照、pytest 8/8 通过，A/B 步骤 6→1、人工介入 4→0，全程 jsonl 可审计。

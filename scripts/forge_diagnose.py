@@ -21,6 +21,7 @@ RULES: list[tuple[str, str, str]] = [
     (r"must use premake|element_wise", "FC-008", "scaffold --style ntops 重新 CODEGEN"),
     (r"unrecognized arguments: --finish", "FC-009", "同步最新 scripts 到 GPU（v0.5+）或改用 forge"),
     (r"ModuleNotFoundError: No module named 'ntops'", "FC-010", "在 ntops 根目录 pip install -e ."),
+    (r"No module named pytest", "FC-012", "pip install pytest；或 cd ntops && pip install -e ."),
 ]
 
 

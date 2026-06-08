@@ -71,8 +71,8 @@ GUARD 检查项：`preflight --strict` + `compare_ref matches reference`
 | 指标 | Baseline（无 skill） | Treatment（有 skill） | 记录方式 |
 |------|---------------------|----------------------|----------|
 | preflight 通过率 | 待补 1 轮对照 | **100%**（silu/add/gelu） | `ab_runs.csv` |
-| pytest 通过率 | 待补 | **100%**（8/8 per op） | GPU 日志 |
-| 人工介入次数 | 待补 | **≤2 步**（gate 一键） | 中期报告 |
+| pytest 通过率 | 未跑通 | **100%**（8/8 per op） | GPU 日志 |
+| 人工介入次数 | **4 次**（估） | **0 次**（gate 一键） | `ab_runs.csv` |
 | 端到端耗时 | — | **~5.7s/算子**，gate ~17s | `forge_runs.jsonl` |
 | 结构错误拦截 | Triton/缺 premake | preflight **100% 拒绝** | 脚本实测 |
 
@@ -91,7 +91,7 @@ python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
 - [x] 每个算子 GUARD 输出 `matches reference`
 - [x] 每个算子 PROVE：`8 passed`
 - [x] 审计日志 `docs/forge_runs.jsonl` 可复现
-- [ ] Baseline 对照 1 轮（答辩前补充，见 AB_Report）
+- [x] Baseline 对照 1 轮（silu，见 `docs/AB_Report.md`）
 
 ---
 

@@ -56,3 +56,8 @@
 
 **信号**: `reference missing application()`（旧版 compare_ref）  
 **修复**: 已支持 `default_application`；更新 `compare_ref.py` 后重跑 `forge gate`
+
+## FC-012: pytest 未安装
+
+**信号**: `No module named pytest`（PROVE 阶段）  
+**修复**: `pip install pytest`；建议在 ntops 根目录 `pip install -e ".[dev]"` 或 `pip install -e .` 后重跑 `doctor.py` 与 `forge gate`

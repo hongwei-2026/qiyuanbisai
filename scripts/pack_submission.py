@@ -27,6 +27,7 @@ def iter_stage_include(stage: str) -> list[str]:
         *COMMON_INCLUDE,
         "docs/Proposal.md",
         "docs/MidTermReport.md",
+        "docs/于鸿伟_九齿skill创新挑战_中期报告.pdf",
         "docs/SelfTestPlan.md",
         "docs/SubmissionGuide.md",
         "docs/InitialRound.md",
@@ -34,6 +35,7 @@ def iter_stage_include(stage: str) -> list[str]:
         "docs/ab_runs.csv",
         "docs/AB_Report.md",
         "docs/Forge_Design.md",
+        "docs/DemoShowcase.md",
         "docs/forge_runs.jsonl",
         "docs/screenshots",
     ]
