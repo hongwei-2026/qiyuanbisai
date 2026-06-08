@@ -82,7 +82,7 @@
 | skills/ntops-forge/ | SKILL.md, specs/, taxonomy.md, fix_cards.md |
 | skills/ntops-copilot/ | SKILL.md, tasks/, formulas.md |
 | scripts/ | forge.py 等 16 个可执行脚本 |
-| docs/screenshots/ | 15 张 GPU 实测截图（本报告附图） |
+| docs/screenshots/ | 16 张 GPU 实测截图（本报告附图，含最终 5v5 验收） |
 
 ![图1 五段流水线架构](screenshots/forge-pipeline-arch.png)
 
@@ -250,9 +250,9 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 | 人工介入 | 4 次 | 0 次 | -4 |
 | 平均耗时 | ~1200s | ~6s/算子 | -99.5% |
 
-![图15 A/B 评估报告](screenshots/08-ab-report-metrics.png)
+![图15 五算子 GATE OK + A/B 5v5 最终验收](screenshots/16-gate-ab-5v5-final.png)
 
-**图15** ab_runs.csv + AB_Report.md 完整对比
+**图15**（最终实测）mul 流水线 FORGE OK 6.8s → GATE SUMMARY 五算子全 OK → AB_Report **5 baseline / 5 treatment**
 
 ### 轻量路径：ntops-copilot
 

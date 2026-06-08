@@ -55,7 +55,7 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 | compare_ref silu/gelu | matches reference | `15-compare-ref-silu-gelu.png` |
 | spec 公式注入 | formula → application 一致 | `04-spec-formula-injection.png` |
 
-## A/B 对照（首轮）
+## A/B 对照（最终 · 5v5）
 
 | 指标 | Baseline | Treatment |
 |------|----------|-----------|
@@ -63,8 +63,9 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 | pytest | 未跑通 | 100% |
 | 平均步骤 | 6 | 1 |
 | 人工介入 | 4 | 0 |
+| 平均耗时 | 1200s | 7s/算子 |
 
-截图：`docs/screenshots/08-ab-report-metrics.png`  
+截图：`docs/screenshots/16-gate-ab-5v5-final.png`（gate + A/B 同屏）  
 数据：`docs/ab_runs.csv`、`docs/AB_Report.md`
 
 ## 注意事项
@@ -75,4 +76,4 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 
 ## 结论
 
-ntops-forge + ntops-copilot 在 RTX 4080 GPU 环境完成工厂流水线验收。silu/add/gelu 官方测试均通过，A/B 首轮数据已记录，可作为初赛「可实现 + 可量化」证据。
+ntops-forge + ntops-copilot 在 RTX 4080 GPU 环境完成五算子工厂流水线验收，A/B 干净 5v5 数据已记录，可作为初赛「可实现 + 可量化」证据。

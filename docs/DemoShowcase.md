@@ -13,13 +13,14 @@
 | 图 | 文件 | 展示内容 | 结论 |
 |----|------|----------|------|
 | 1 | `01-doctor-gpu-ok.png` | 环境自检 | ninetoothed / torch / pytest / ntops / CUDA 全部 OK |
-| 2 | `02-forge-gate-summary.png` | 一键 gate | silu/add/gelu **GATE OK: all operators passed** |
+| 2 | `02-forge-gate-summary.png` | 一键 gate（早期） | 三算子 gate 汇总 |
 | 3 | `03-forge-run-silu-full.png` | 五段流水线 | PLAN→CODEGEN→GUARD→PROVE→SHIP 全通过，~6.8s |
 | 4 | `04-spec-formula-injection.png` | 规格驱动 | spec `formula` → 生成内核 `application()` 一致 |
 | 5 | `05-preflight-triton-vs-forge.png` | 结构护栏 | Triton 稿 **5 项 FAIL**；forge 稿 **OK** |
 | 6 | `06-fix-cards-diagnose.png` | 失败诊断 | FC-001 / FC-004 自动匹配修复建议 |
 | 7 | `07-forge-audit-jsonl.png` | 审计日志 | 三算子 jsonl 五阶段 `ok: true`，~7s/算子 |
-| 8 | `08-ab-report-metrics.png` | A/B 量化 | preflight 0%→100%，步骤 6→1，介入 4→0 |
+| 8 | `08-ab-report-metrics.png` | A/B 量化（早期） | 首轮对照数据 |
+| 16 | `16-gate-ab-5v5-final.png` | **A/B 最终** | **5 baseline / 5 treatment，步骤 6→1、介入 4→0** |
 | 9 | `09-copilot-run-task-finish.png` | 轻量路径 | `run_task --finish` 一键完工 |
 | 10 | `10-forge-spec-nl-and-copilot.png` | NL→spec | 「relu unary max zero」→ YAML spec |
 | 11 | `11-forge-spec-and-repo-structure.png` | 仓库结构 | forge list + skills/scripts 目录 |
@@ -50,7 +51,7 @@
 4. **失败诊断卡**：图 6 — 错误文本 → FC-xxx 修复动作  
 5. **jsonl 全链路审计**：图 7 — 每算子五阶段耗时与路径可追溯  
 6. **自然语言生成 spec**：图 10、11 — `forge_spec.py` 一句话出 YAML  
-7. **A/B 可量化**：图 8 — Treatment 相对 Baseline 步骤 −5、介入 −4  
+7. **A/B 可量化**：图 16 — 5v5 干净对照，步骤 −5、介入 −4、耗时 1200s→7s  
 
 ---
 
@@ -61,8 +62,7 @@ source /root/miniconda3/bin/activate base
 cd /root/work/skill
 
 python scripts/doctor.py                              # 图 1
-python scripts/forge.py gate --ntops-root /root/work/ntops   # 图 2
-cat docs/AB_Report.md                                 # 图 8
+bash scripts/run_ab_manual.sh /root/work/ntops        # 图 16（gate + A/B 同屏）
 ```
 
 备用对比：`05-preflight-triton-vs-forge.png`（无 skill vs 有 skill）

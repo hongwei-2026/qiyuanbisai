@@ -48,7 +48,7 @@ bash scripts/run_ab_manual.sh /root/work/ntops
 
 优化说明：[docs/OptimizationSummary.md](docs/OptimizationSummary.md) · 竞品对比：[docs/CompetitiveAnalysis.md](docs/CompetitiveAnalysis.md)
 
-![forge gate 验收](docs/screenshots/02-forge-gate-summary.png)
+![五算子 GATE OK + A/B 5v5 最终验收](docs/screenshots/16-gate-ab-5v5-final.png)
 
 完整截图说明：[docs/DemoShowcase.md](docs/DemoShowcase.md)
 
@@ -162,7 +162,7 @@ python scripts/run_task.py --task silu --ntops-root /path/to/ntops --finish
 | Proposal | [docs/Proposal.md](docs/Proposal.md) |
 | .skill 初版 | [skills/ntops-forge/](skills/ntops-forge/) + [skills/ntops-copilot/](skills/ntops-copilot/) |
 | 自测计划 | [docs/SelfTestPlan.md](docs/SelfTestPlan.md) |
-| 中期报告 PDF | `docs/于鸿伟_九齿skill创新挑战_中期报告.pdf`（含 12 张实测附图） |
+| 中期报告 PDF | `docs/于鸿伟_九齿skill创新挑战_中期报告.pdf`（含 16 张实测附图） |
 | 功能演示 | [docs/DemoShowcase.md](docs/DemoShowcase.md) |
 | PR 描述模板 | [docs/PR_TEMPLATE.md](docs/PR_TEMPLATE.md)（对照组委会八项要求） |
 

@@ -32,3 +32,5 @@
 | mul | 8 passed | 12.5s |
 
 **GATE OK: all operators passed**
+
+截图证据：`docs/screenshots/16-gate-ab-5v5-final.png`（RTX 4080 · 2026-06-08）

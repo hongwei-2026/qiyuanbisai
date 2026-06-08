@@ -33,7 +33,7 @@
 - 全部 scripts
 - Proposal / 自测计划 / 中期报告（md）
 - GPU 测试报告、A/B 报告、forge 设计说明
-- 截图集 `docs/screenshots/`（15 张实测 + 架构图）
+- 截图集 `docs/screenshots/`（16 张实测 + 架构图，含 `16-gate-ab-5v5-final.png`）
 - 截图说明 `docs/DemoShowcase.md`
 
 ## 本地打包命令

@@ -1,6 +1,6 @@
 # 优化项与截图结果说明
 
-本截图对应 **2026-06-08 GPU 实测**，展示 `forge gate` 五算子验收 + 干净 A/B 报告。
+本截图（`16-gate-ab-5v5-final.png`）对应 **2026-06-08 GPU 实测**，已确认 **5 baseline / 5 treatment** + 五算子 GATE OK。
 
 ---
 
@@ -35,7 +35,7 @@ GATE OK: all operators passed
 | 人工介入 | 4 | 0 |
 | 耗时 | ~1200s | ~7s/算子 |
 
-若截图显示 `3 treatment`，说明 gate 后 **只记录了 3 条 treatment**（旧流程），请用 `run_ab_suite.py` 重跑。
+> 旧截图若仅 `3 treatment`，为 gate 未补录 treatment 所致；最终截图已用 `run_ab_manual.sh` / 手动 for 循环补齐 5 条。
 
 ---
 
