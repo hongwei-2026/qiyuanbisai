@@ -124,7 +124,7 @@
 
 **图3** forge run silu：PLAN→CODEGEN→GUARD→PROVE→SHIP 全通过，6.8s
 
-![图4 一键 gate 三算子验收](screenshots/02-forge-gate-summary.png)
+![图4 一键 gate 早期验收](screenshots/02-forge-gate-summary.png)
 
 **图4** forge gate：silu / add / gelu / relu / mul 五算子 GATE OK
 
@@ -296,16 +296,27 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 | 提交项 | 链接 |
 |--------|------|
 | Github | https://github.com/hongwei-2026/qiyuanbisai |
-| Commit | https://github.com/hongwei-2026/qiyuanbisai/commit/21d8ae3 |
+| Commit | https://github.com/hongwei-2026/qiyuanbisai/commit/234f221 |
 | 优化说明 | docs/OptimizationSummary.md |
 
 ---
 
-## 十三、后续可维护计划
+## 十三、赛题 4.2 四类自测覆盖
 
-1. 决赛前扩展 norm/attention spec（只读 reference 模式）  
-2. 对接组委会隐藏任务集，优化 SKILL 触发词  
-3. 最终报告补充 benchmark 与性能回退分析  
+| 类型 | 初赛 | 证据 |
+|------|------|------|
+| 逐元素/广播 | ✅ 五算子 gate | 图15、AB_Report |
+| 归约/分块 | 📋 softmax spec | `specs/softmax.yaml`、`FinalsRoadmap.md` |
+| 布局 stride | 📋 max_pool2d spec | `specs/max_pool2d.yaml` |
+| 性能/诊断 | ✅ A/B 耗时 + fix_cards | `BenchmarkPlan.md`、`bench_op.py` |
+
+完整示例：`skills/ntops-forge/examples/silu_walkthrough.md`
+
+## 十四、后续可维护计划
+
+1. 决赛执行 softmax / max_pool2d PLAN→reference→pytest  
+2. 运行 `bench_op.py` 补充 silu kernel 计时材料  
+3. 对接组委会隐藏任务集，优化 SKILL 触发词  
 
 ---
 

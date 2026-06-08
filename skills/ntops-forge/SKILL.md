@@ -12,6 +12,17 @@ description: >-
 
 Agent 不再拼凑零散命令，而是执行 **五段流水线**，每段有明确输入/输出与失败路由。
 
+## 包结构（符合 Agent Skills 建议）
+
+| 目录 | 内容 |
+|------|------|
+| `SKILL.md` | 本文件：触发场景与工作流 |
+| `specs/` | 算子规格（含决赛规划 softmax/max_pool2d） |
+| `examples/` | 完整示例 `silu_walkthrough.md` |
+| `references/` | 查阅索引（taxonomy、官方文档） |
+| `tests/` | skill 有效性验证说明 |
+| `taxonomy.md` / `fix_cards.md` | 路由与失败诊断 |
+
 ## 与 copilot 的差异
 
 | | ntops-copilot | ntops-forge |

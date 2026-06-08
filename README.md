@@ -182,7 +182,7 @@ python scripts/run_task.py --task silu --ntops-root /path/to/ntops --finish
 ```text
 skills/
   ntops-forge/          # 工厂流水线（主作品）
-    SKILL.md, specs/, taxonomy.md, fix_cards.md
+    SKILL.md, specs/, examples/, references/, tests/
   ntops-copilot/        # 轻量副驾驶
     SKILL.md, tasks/, formulas.md
 scripts/

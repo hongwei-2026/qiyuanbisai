@@ -5,13 +5,13 @@
 | 组名/选手 | 于鸿伟 |
 | GitHub | hongwei-2026 |
 | 仓库 | https://github.com/hongwei-2026/qiyuanbisai |
-| 日期 | 2026-06-06 |
+| 日期 | 2026-06-08 |
 
 ---
 
 ## 1. 自测目标
 
-验证 skill 能否让 Agent **更少犯错、更快完成** ntops 九齿 elementwise 算子开发，并形成可复现证据。
+验证 skill 能否让 Agent **更少犯错、更快完成** ntops 九齿算子开发，并形成可复现、可量化的 A/B 证据。
 
 ---
 
@@ -27,29 +27,49 @@
 
 ---
 
-## 3. 自测任务集
+## 3. 自测任务集（对照赛题 4.2 四类）
 
-### 3.1 公开任务（ntops 官方测试）
+### 3.1 逐元素 / 广播类 ✅ 初赛已完成
 
-| 算子 | 类型 | pytest 文件 | 预期 |
+| 算子 | 类型 | pytest 文件 | 状态 |
 |------|------|-------------|------|
-| silu | unary | `tests/test_silu.py` | 8 passed |
-| add | binary | `tests/test_add.py` | 8 passed |
-| gelu | unary | `tests/test_gelu.py` | 8 passed（部分 skipped 正常） |
-| relu | unary | `tests/test_relu.py` | 8 passed |
-| mul | binary | `tests/test_mul.py` | 8 passed |
+| silu | unary | `tests/test_silu.py` | ✅ 8 passed |
+| add | binary | `tests/test_add.py` | ✅ 8 passed |
+| gelu | unary | `tests/test_gelu.py` | ✅ 8 passed |
+| relu | unary | `tests/test_relu.py` | ✅ 16 passed |
+| mul | binary | `tests/test_mul.py` | ✅ 8 passed |
 
-### 3.2 模拟任务（skill 任务卡 / forge spec）
+示例：`skills/ntops-forge/examples/silu_walkthrough.md`
+
+### 3.2 归约 / 分块类 📋 决赛计划
+
+| 算子 | 类型 | pytest | spec | 状态 |
+|------|------|--------|------|------|
+| softmax | reduction | `tests/test_softmax.py` | `specs/softmax.yaml` | PLAN + 读 reference |
+
+策略：taxonomy 对 `reduction` family 禁止公式硬注入，先读 `src/ntops/kernels/softmax.py`。
+
+### 3.3 布局敏感（stride / padding）📋 决赛计划
+
+| 算子 | 场景 | pytest | spec | 状态 |
+|------|------|--------|------|------|
+| max_pool2d | stride=(None,1,(2,3)) | `tests/test_max_pool2d.py` | `specs/max_pool2d.yaml` | 已规划 |
+
+### 3.4 性能 / 诊断类
+
+| 任务 | 初赛 | 决赛 | 文档 |
+|------|------|------|------|
+| 流水线耗时 A/B | ✅ 5v5 完成 | 维持 | `docs/AB_Report.md` |
+| silu kernel 计时 | — | 执行 | `docs/BenchmarkPlan.md` + `scripts/bench_op.py` |
+| 失败诊断 | ✅ fix_cards | 扩展 | `skills/ntops-forge/fix_cards.md` |
+
+### 3.5 任务卡 / forge spec
 
 - `skills/ntops-copilot/tasks/task_*.yaml`（5 张）
-- `skills/ntops-forge/specs/*.yaml`（silu/add/gelu）
+- `skills/ntops-forge/specs/*.yaml`（7 张：5 已完成 + 2 决赛规划）
 - 命令：`forge.py run <op>` 或 `run_task.py --finish`
 
-### 3.3 仓库任务（大赛 PR 规范）
-
-- 分支命名：`2026-spring-hongwei-2026-<赛题号>`
-- PR 标题：`[2026春季][赛题号] hongwei-2026`
-- 初赛阶段：**不要求 PR 合入**，以独立 skill 仓库 + commit 链接提交
+决赛路线图：`docs/FinalsRoadmap.md`
 
 ---
 
@@ -59,12 +79,12 @@
 source /root/miniconda3/bin/activate base
 cd /root/work/skill
 python scripts/doctor.py
-bash scripts/run_ab_manual.sh /root/work/ntops   # 或 git pull 后用 run_ab_suite.py
+bash scripts/run_ab_manual.sh /root/work/ntops
 ```
 
 五段流水线：**PLAN → CODEGEN → GUARD → PROVE → SHIP**
 
-GUARD 检查项：`preflight --strict` + `compare_ref matches reference`
+GUARD：`preflight --strict` + `compare_ref matches reference`
 
 ---
 
@@ -73,12 +93,10 @@ GUARD 检查项：`preflight --strict` + `compare_ref matches reference`
 | 指标 | Baseline（无 skill） | Treatment（有 skill） | 记录方式 |
 |------|---------------------|----------------------|----------|
 | preflight 通过率 | **0%**（5 算子） | **100%**（5 算子） | `ab_runs.csv` |
-| pytest 通过率 | 未跑通 | **100%**（8/8 per op） | GPU 日志 |
-| 人工介入次数 | **4 次** | **0 次**（gate 一键） | `ab_runs.csv` |
-| 端到端耗时 | **~1200s** | **~7s/算子**，gate ~35s | `forge_runs.jsonl` |
+| pytest 通过率 | 未跑通 | **100%** | GPU 日志 |
+| 人工介入次数 | **4 次** | **0 次** | `ab_runs.csv` |
+| 端到端耗时 | **~1200s** | **~7s/算子** | `forge_runs.jsonl` |
 | 结构错误拦截 | Triton/缺 premake | preflight **100% 拒绝** | 脚本实测 |
-
-汇总命令：
 
 ```bash
 python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
@@ -89,11 +107,12 @@ python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
 ## 6. 通过标准（初赛）
 
 - [x] `doctor` 全 OK（GPU）
-- [x] `forge gate`：silu + add + gelu 全 `GATE OK`
-- [x] 每个算子 GUARD 输出 `matches reference`
-- [x] 每个算子 PROVE：`8 passed`
+- [x] `forge gate`：silu / add / gelu / relu / mul 全 `GATE OK`
+- [x] 每个算子 GUARD：`matches reference`
+- [x] 每个算子 PROVE：pytest 全通过
 - [x] 审计日志 `docs/forge_runs.jsonl` 可复现
-- [x] Baseline 对照 1 轮（silu，见 `docs/AB_Report.md`）
+- [x] A/B 干净 5 baseline / 5 treatment（见 `docs/AB_Report.md`）
+- [x] skill 包含 `examples/`、`references/`、`tests/`（见 `skills/ntops-forge/`）
 
 ---
 
@@ -104,11 +123,14 @@ python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
 | 跑全量 `pytest tests/` 误失败 conv2d | 只用 `tests/test_<op>.py` |
 | 在 `$HOME` 跑脚本找不到文件 | 固定 `cd /root/work/skill` |
 | gelu 参考无 `application()` | `compare_ref` 支持 `default_application` |
+| 复杂算子硬写公式 | taxonomy 路由 → 只读 reference |
 
 ---
 
 ## 8. 附件
 
 - `docs/GPU_Test_Report.md`
-- `docs/screenshots/forge-gate-gpu-test.png`
+- `docs/FinalsRoadmap.md`
+- `docs/BenchmarkPlan.md`
+- `docs/screenshots/16-gate-ab-5v5-final.png`
 - `docs/forge_runs.jsonl`

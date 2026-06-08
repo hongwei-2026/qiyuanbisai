@@ -48,7 +48,7 @@ PLAN → CODEGEN → GUARD → PROVE → SHIP
 | PROVE | 精准 `tests/test_<op>.py` | GPU pytest 验收（禁止全量） |
 | SHIP | `forge_runs.jsonl` + PR 模板 | 可审计交付 |
 
-演示闸门：`forge gate` 一键串联 silu / add / gelu 回归验收。
+演示闸门：`forge gate` 一键串联 silu / add / gelu / relu / mul 五算子回归验收。
 
 ### 2.3 ntops-copilot（轻量路径）
 
@@ -99,7 +99,9 @@ PLAN → CODEGEN → GUARD → PROVE → SHIP
 |------|------|
 | Proposal（05/21） | 本仓库、skill v0.1、zip 提交 |
 | 初赛（06/08） | forge v1.0 + gate 五算子 GPU 实测 + A/B 可复现脚本 |
-| 决赛（07/13） | 对接组委会标准任务集；优化 SKILL 触发词与错误表 |
+| 决赛（07/13） | softmax/max_pool2d + benchmark；对接隐藏任务集 |
+
+赛题 4.2 四类自测映射见 `docs/FinalsRoadmap.md`；完整示例见 `skills/ntops-forge/examples/silu_walkthrough.md`。
 
 ---
 
