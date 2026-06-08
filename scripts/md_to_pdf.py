@@ -75,7 +75,7 @@ def _is_table_sep(line: str) -> bool:
     return bool(re.match(r"^\|[\s\-:|]+\|\s*$", line))
 
 
-def _make_image(path: Path, max_w: float = CONTENT_W, max_h: float = 11 * cm) -> RLImage:
+def _make_image(path: Path, max_w: float = CONTENT_W, max_h: float = 8.5 * cm) -> RLImage:
     with PILImage.open(path) as im:
         w, h = im.size
     ratio = h / w if w else 1
@@ -83,7 +83,7 @@ def _make_image(path: Path, max_w: float = CONTENT_W, max_h: float = 11 * cm) ->
     height = width * ratio
     if height > max_h:
         height = max_h
-        width = height / ratio
+        width = height / ratio if ratio else max_w
     return RLImage(str(path), width=width, height=height)
 
 
@@ -109,11 +109,12 @@ def _table_flowable(rows: list[list[str]], st: dict[str, ParagraphStyle]) -> Tab
     return tbl
 
 
-def convert(md_path: Path, out_path: Path) -> None:
+def convert(md_path: Path, out_path: Path) -> int:
     _register_font()
     st = _styles()
     base_dir = md_path.parent
     story: list = []
+    img_count = 0
 
     lines = md_path.read_text(encoding="utf-8").splitlines()
     i = 0
@@ -156,10 +157,15 @@ def convert(md_path: Path, out_path: Path) -> None:
         if m_img:
             alt, rel = m_img.group(1), m_img.group(2)
             img_path = (base_dir / rel).resolve()
+            story.append(PageBreak())
             if img_path.is_file():
-                story.append(Spacer(1, 6))
-                story.append(_make_image(img_path))
-                story.append(Paragraph(_esc(alt), st["caption"]))
+                try:
+                    story.append(_make_image(img_path))
+                    story.append(Spacer(1, 4))
+                    story.append(Paragraph(_esc(alt), st["caption"]))
+                    img_count += 1
+                except Exception as exc:
+                    story.append(Paragraph(f"[图片渲染失败: {rel} - {exc}]", st["body"]))
             else:
                 story.append(Paragraph(f"[图片缺失: {rel}]", st["body"]))
             i += 1
@@ -235,6 +241,7 @@ def convert(md_path: Path, out_path: Path) -> None:
         canvas.restoreState()
 
     doc.build(story, onFirstPage=_footer, onLaterPages=_footer)
+    return img_count
 
 
 def main() -> None:
@@ -242,8 +249,8 @@ def main() -> None:
     p.add_argument("--input", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
-    convert(args.input, args.output)
-    print(f"Created {args.output}")
+    n = convert(args.input, args.output)
+    print(f"Created {args.output} ({n} images embedded)")
 
 
 if __name__ == "__main__":
