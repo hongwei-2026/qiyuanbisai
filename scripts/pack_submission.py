@@ -36,6 +36,7 @@ def iter_stage_include(stage: str) -> list[str]:
         "docs/AB_Report.md",
         "docs/Forge_Design.md",
         "docs/DemoShowcase.md",
+        "docs/PR_TEMPLATE.md",
         "docs/forge_runs.jsonl",
         "docs/screenshots",
     ]

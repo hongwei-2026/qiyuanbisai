@@ -21,4 +21,5 @@
 
 - `scripts/preflight.py` — 本人编写（Python ast 标准库）  
 - `scripts/pack_submission.py` — 本人编写  
-- `skills/ntops-copilot/SKILL.md` 工作流文字 — 本人编写
+- `skills/ntops-forge/SKILL.md`、`skills/ntops-copilot/SKILL.md` — 本人编写  
+- `scripts/forge.py` 及流水线脚本 — 本人编写

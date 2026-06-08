@@ -146,8 +146,9 @@ python scripts/run_task.py --task silu --ntops-root /path/to/ntops --finish
 | Proposal | [docs/Proposal.md](docs/Proposal.md) |
 | .skill 初版 | [skills/ntops-forge/](skills/ntops-forge/) + [skills/ntops-copilot/](skills/ntops-copilot/) |
 | 自测计划 | [docs/SelfTestPlan.md](docs/SelfTestPlan.md) |
-| 中期报告 PDF | `docs/于鸿伟_九齿skill创新挑战_中期报告.pdf` |
+| 中期报告 PDF | `docs/于鸿伟_九齿skill创新挑战_中期报告.pdf`（含 12 张实测附图） |
 | 功能演示 | [docs/DemoShowcase.md](docs/DemoShowcase.md) |
+| PR 描述模板 | [docs/PR_TEMPLATE.md](docs/PR_TEMPLATE.md)（对照组委会八项要求） |
 
 ### 官网表单
 
