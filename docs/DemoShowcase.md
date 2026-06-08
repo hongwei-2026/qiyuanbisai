@@ -22,6 +22,8 @@
 | 8 | `08-ab-report-metrics.png` | A/B 量化（早期） | 首轮对照数据 |
 | 16 | `16-gate-ab-5v5-final.png` | **A/B 最终** | **5 baseline / 5 treatment，步骤 6→1、介入 4→0** |
 | 17 | `17-bench-silu-gpu.png` | silu benchmark | PyTorch 0.052ms vs ntops 0.072ms，ratio 1.37× |
+| 18 | `18-st2-st3-pytest-start.png` | ST2 softmax | **8 passed** 归约类 |
+| 19 | `19-st3-maxpool2d-pytest-summary.png` | ST3 max_pool2d | **62 passed**, 54 skipped |
 | 9 | `09-copilot-run-task-finish.png` | 轻量路径 | `run_task --finish` 一键完工 |
 | 10 | `10-forge-spec-nl-and-copilot.png` | NL→spec | 「relu unary max zero」→ YAML spec |
 | 11 | `11-forge-spec-and-repo-structure.png` | 仓库结构 | forge list + skills/scripts 目录 |

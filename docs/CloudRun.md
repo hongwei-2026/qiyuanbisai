@@ -50,7 +50,23 @@ cat docs/AB_Report.md
 
 ---
 
-## 2. 同步最新仓库后（git pull 之后）
+## 2. 同步最新代码
+
+云机 `/root/work/skill` 若不是 git 仓库（`git pull` 报 fatal），请用本地上传/SFTP 同步，或在有 `.git` 的环境 pull：
+
+```bash
+cd /root/work/skill   # 仅当已是 git clone
+git pull origin main
+```
+
+ST2/ST3 pytest 在 **ntops 目录**执行，不依赖 skill 是否为 git 仓库：
+
+```bash
+cd /root/work/ntops
+pytest tests/test_softmax.py tests/test_max_pool2d.py -v
+```
+
+## 2b. 同步后一键脚本
 
 ```bash
 cd /root/work/skill

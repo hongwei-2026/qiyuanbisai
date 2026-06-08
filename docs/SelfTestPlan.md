@@ -45,7 +45,7 @@
 
 | 算子 | 类型 | pytest | spec | 状态 |
 |------|------|--------|------|------|
-| softmax | reduction | `tests/test_softmax.py` | `specs/softmax.yaml` | ✅ ST2 PLAN+reference |
+| softmax | reduction | `tests/test_softmax.py` | `specs/softmax.yaml` | ✅ ST2 **8 passed** GPU |
 
 策略：taxonomy 对 `reduction` family 禁止公式硬注入，先读 `src/ntops/kernels/softmax.py`。
 
@@ -53,7 +53,7 @@
 
 | 算子 | 场景 | pytest | spec | 状态 |
 |------|------|--------|------|------|
-| max_pool2d | stride=(None,1,(2,3)) | `tests/test_max_pool2d.py` | `specs/max_pool2d.yaml` | ✅ ST3 设计完成 |
+| max_pool2d | stride=(None,1,(2,3)) | `tests/test_max_pool2d.py` | `specs/max_pool2d.yaml` | ✅ ST3 **62 passed** GPU |
 
 ### 3.4 性能 / 诊断类
 

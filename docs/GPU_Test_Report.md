@@ -76,6 +76,15 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 
 截图：`docs/screenshots/17-bench-silu-gpu.png` · 数据：`docs/bench_silu.json`
 
+## ST2/ST3 归约与布局 pytest（2026-06-08）
+
+| 测试 | 结果 | 截图 |
+|------|------|------|
+| test_softmax.py | **8 passed** | `18-st2-st3-pytest-start.png` |
+| test_max_pool2d.py | **62 passed**, 54 skipped | `19-st3-maxpool2d-pytest-summary.png` |
+
+> 54 skipped 为 ntops 官方对非法 padding 的 skip，非失败。详见 `docs/st2_st3_gpu_results.md`。
+
 ## 注意事项
 
 - **不要**运行 `pytest tests/` 全量：上游 `conv2d` 可能失败，与 skill 无关。

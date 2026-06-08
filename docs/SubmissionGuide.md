@@ -33,7 +33,7 @@
 - 全部 scripts
 - Proposal / 自测计划 / 中期报告（md）
 - GPU 测试报告、A/B 报告、forge 设计说明、决赛路线图、Benchmark 计划
-- 截图集 `docs/screenshots/`（17 张实测 + 架构图）
+- 截图集 `docs/screenshots/`（19 张实测 + 架构图）
 - 四类自测案例 `docs/selftests/`、评分对照 `docs/ScoringAlignment.md`
 - 截图说明 `docs/DemoShowcase.md`
 

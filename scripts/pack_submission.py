@@ -44,6 +44,7 @@ def iter_stage_include(stage: str) -> list[str]:
         "docs/ScoringAlignment.md",
         "docs/DualSkillGuide.md",
         "docs/selftests",
+        "docs/st2_st3_gpu_results.md",
         "docs/Baseline_Demo.md",
         "docs/PR_TEMPLATE.md",
         "docs/forge_runs.jsonl",

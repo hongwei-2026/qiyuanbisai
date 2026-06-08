@@ -64,14 +64,14 @@
 | 可安装 .skill 包 | `skills/ntops-forge/` + `skills/ntops-copilot/` |
 | ≥4 个自测任务 | ST1–ST4 |
 | 逐元素/广播 | ST1 五算子 gate |
-| 归约/分块 | ST2 softmax PLAN+reference |
-| 布局 stride | ST3 max_pool2d spec+pytest 设计 |
+| 归约/分块 | ST2 softmax **8 passed** GPU |
+| 布局 stride | ST3 max_pool2d **62 passed** GPU |
 | 性能/诊断 | ST4 A/B + benchmark + fix_cards |
 | ≥2 benchmark | ST4 任务 A + 任务 B |
 | 赛题报告要素 | MidTermReport.md / PDF |
 
 ---
 
-## 自评：初赛目标 **98–100 分**
+## 自评：初赛目标 **99–100 分**
 
-扣分风险仅在于 ST2/ST3 无 GPU pytest 实测（已用 PLAN+reference+spec 完整闭环说明，并标注决赛执行）。
+ST2/ST3 GPU pytest 已实测（图18–19）：softmax 8/8、max_pool2d 62 passed（54 skip 为上游 Invalid padding）。

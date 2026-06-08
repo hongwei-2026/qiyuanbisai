@@ -83,7 +83,7 @@
 | skills/ntops-copilot/ | SKILL.md, tasks/, examples/, references/, tests/ |
 | docs/selftests/ | ST1–ST4 四类自测案例 |
 | scripts/ | forge.py 等 16 个可执行脚本 |
-| docs/screenshots/ | 17 张 GPU 实测截图（本报告附图，含 5v5 验收与 benchmark） |
+| docs/screenshots/ | 19 张 GPU 实测截图（含 ST2/ST3 pytest） |
 
 ![图1 五段流水线架构](screenshots/forge-pipeline-arch.png)
 
@@ -307,8 +307,8 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 | 类型 | 初赛 | 证据 |
 |------|------|------|
 | 逐元素/广播 | ✅ 五算子 gate | 图15、AB_Report |
-| 归约/分块 | ✅ ST2 PLAN+reference | `docs/selftests/ST2_softmax_reduce.md` |
-| 布局 stride | ✅ ST3 spec+pytest 设计 | `docs/selftests/ST3_max_pool2d_layout.md` |
+| 归约/分块 | ✅ ST2 softmax **8 passed** | 图18、`ST2_softmax_reduce.md` |
+| 布局 stride | ✅ ST3 max_pool2d **62 passed** | 图19、`ST3_max_pool2d_layout.md` |
 | 性能/诊断 | ✅ A/B 耗时 + silu benchmark | `bench_silu.json`、图17 |
 
 完整示例：`skills/ntops-forge/examples/silu_walkthrough.md`
@@ -316,6 +316,14 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 ![图17 silu benchmark GPU 实测](screenshots/17-bench-silu-gpu.png)
 
 **图17** silu 4096×4096 fp16：PyTorch 0.0523 ms vs ntops 0.0715 ms（ratio 1.37×，同量级无数量级回退）
+
+![图18 ST2 softmax pytest 8 passed](screenshots/18-st2-st3-pytest-start.png)
+
+**图18** test_softmax.py：8 passed（归约类 correctness）
+
+![图19 ST3 max_pool2d pytest 汇总](screenshots/19-st3-maxpool2d-pytest-summary.png)
+
+**图19** test_max_pool2d.py：62 passed, 54 skipped（布局 stride；skip 为上游 Invalid padding）
 
 ## 十四、初赛评分对照
 

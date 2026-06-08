@@ -110,8 +110,8 @@ PLAN → CODEGEN → GUARD → PROVE → SHIP
 | 类型 | 案例 | 初赛状态 | 证据 |
 |------|------|----------|------|
 | 逐元素/广播 | ST1 五算子 | ✅ GPU 完成 | `docs/selftests/ST1_elementwise.md` |
-| 归约/分块 | ST2 softmax | ✅ PLAN+reference | `docs/selftests/ST2_softmax_reduce.md` |
-| 布局 stride | ST3 max_pool2d | ✅ spec+pytest 设计 | `docs/selftests/ST3_max_pool2d_layout.md` |
+| 归约/分块 | ST2 softmax | ✅ GPU 8 passed | `docs/selftests/ST2_softmax_reduce.md` |
+| 布局 stride | ST3 max_pool2d | ✅ GPU 62 passed | `docs/selftests/ST3_max_pool2d_layout.md` |
 | 性能/诊断 | ST4 | ✅ A/B+benchmark | `docs/selftests/ST4_perf_diagnosis.md` |
 
 评分逐条对照：`docs/ScoringAlignment.md`
