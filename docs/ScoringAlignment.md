@@ -1,7 +1,7 @@
 # 初赛评分逐条对照（满分 100）
 
 > 选手：于鸿伟 · 仓库：https://github.com/hongwei-2026/qiyuanbisai  
-> 提交 Commit：https://github.com/hongwei-2026/qiyuanbisai/commit/71cabaa
+> 提交 Commit：https://github.com/hongwei-2026/qiyuanbisai/commit/9dddb4d
 
 ---
 
