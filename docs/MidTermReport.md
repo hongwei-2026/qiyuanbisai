@@ -209,7 +209,7 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 | 提交项 | 内容 |
 |--------|------|
 | Github 仓库 | https://github.com/hongwei-2026/qiyuanbisai |
-| Commit 链接 | https://github.com/hongwei-2026/qiyuanbisai/commit/111f8fc |
+| Commit 链接 | https://github.com/hongwei-2026/qiyuanbisai/commit/0827442 |
 | 附件 zip | `submission-initial-20260606.zip` |
 | 本报告 PDF | `于鸿伟_九齿skill创新挑战_中期报告.pdf` |
 
