@@ -105,7 +105,18 @@ PLAN → CODEGEN → GUARD → PROVE → SHIP
 
 ---
 
-## 五、成功指标（初赛已测）
+## 五、赛题 4.2 四类自测对照
+
+| 类型 | 案例 | 初赛状态 | 证据 |
+|------|------|----------|------|
+| 逐元素/广播 | ST1 五算子 | ✅ GPU 完成 | `docs/selftests/ST1_elementwise.md` |
+| 归约/分块 | ST2 softmax | ✅ PLAN+reference | `docs/selftests/ST2_softmax_reduce.md` |
+| 布局 stride | ST3 max_pool2d | ✅ spec+pytest 设计 | `docs/selftests/ST3_max_pool2d_layout.md` |
+| 性能/诊断 | ST4 | ✅ A/B+benchmark | `docs/selftests/ST4_perf_diagnosis.md` |
+
+评分逐条对照：`docs/ScoringAlignment.md`
+
+## 六、成功指标（初赛已测）
 
 | 指标 | 目标 | 实测（RTX 4080 / AutoDL） |
 |------|------|---------------------------|
@@ -114,11 +125,13 @@ PLAN → CODEGEN → GUARD → PROVE → SHIP
 | compare_ref 一致率 | 100% | ✅ matches reference |
 | pytest 通过率 | Treatment > Baseline | ✅ 100% vs 未跑通 |
 | 单算子流水线耗时 | < 30 s | ✅ ~7 s |
-| gate 五算子 | 全通过 | ✅ GATE OK（GPU 复现） |
+| gate 五算子 | 全通过 | ✅ GATE OK |
+| silu benchmark | 同量级 | ✅ ratio 1.37× |
+| A/B 样本 | 5v5 | ✅ 干净对照 |
 
 ---
 
-## 六、诚信
+## 七、诚信
 
 已阅读大赛诚信守则。本 Proposal 与 skill 为原创；参考 NineToothed 官方示例已在 `REFERENCE.md` 列出，后续 ntops PR 将附 HONOR_CODE。
 

@@ -26,11 +26,12 @@ Forge 根据 `family` 选择模板与验收策略，Agent **不要猜**。
 - **模板**: 四 tensor premake（含 `alpha`）
 - **pytest**: `tests/test_<op>.py`
 
-## reduction / norm / attention（只读参考）
+## reduction / pooling / norm / attention（只读参考）
 
 | family | 策略 |
 |--------|------|
-| reduction | 先读 ntops 同名 kernel，禁止从公式硬写 |
+| reduction | 先读 ntops 同名 kernel（如 softmax），禁止从公式硬写 |
+| pooling | 先读 max_pool2d 等，关注 stride/padding 布局 |
 | norm | 读 `layer_norm` / `rms_norm` 参考实现 |
 | attention | 读 `scaled_dot_product_attention` |
 

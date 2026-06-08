@@ -45,7 +45,7 @@
 
 | 算子 | 类型 | pytest | spec | 状态 |
 |------|------|--------|------|------|
-| softmax | reduction | `tests/test_softmax.py` | `specs/softmax.yaml` | PLAN + 读 reference |
+| softmax | reduction | `tests/test_softmax.py` | `specs/softmax.yaml` | ✅ ST2 PLAN+reference |
 
 策略：taxonomy 对 `reduction` family 禁止公式硬注入，先读 `src/ntops/kernels/softmax.py`。
 
@@ -53,7 +53,7 @@
 
 | 算子 | 场景 | pytest | spec | 状态 |
 |------|------|--------|------|------|
-| max_pool2d | stride=(None,1,(2,3)) | `tests/test_max_pool2d.py` | `specs/max_pool2d.yaml` | 已规划 |
+| max_pool2d | stride=(None,1,(2,3)) | `tests/test_max_pool2d.py` | `specs/max_pool2d.yaml` | ✅ ST3 设计完成 |
 
 ### 3.4 性能 / 诊断类
 
@@ -127,10 +127,18 @@ python scripts/eval_ab.py --input docs/ab_runs.csv --output docs/AB_Report.md
 
 ---
 
-## 8. 附件
+## 8. 四类自测案例（赛题 4.2）
 
-- `docs/GPU_Test_Report.md`
-- `docs/FinalsRoadmap.md`
-- `docs/BenchmarkPlan.md`
-- `docs/screenshots/16-gate-ab-5v5-final.png`
-- `docs/forge_runs.jsonl`
+| 案例 | 文件 |
+|------|------|
+| ST1 逐元素/广播 | `docs/selftests/ST1_elementwise.md` |
+| ST2 归约/分块 | `docs/selftests/ST2_softmax_reduce.md` |
+| ST3 布局 stride | `docs/selftests/ST3_max_pool2d_layout.md` |
+| ST4 性能/诊断 | `docs/selftests/ST4_perf_diagnosis.md` |
+
+评分对照：`docs/ScoringAlignment.md`
+
+## 9. 附件
+
+- `docs/GPU_Test_Report.md`、`docs/FinalsRoadmap.md`、`docs/BenchmarkPlan.md`
+- `docs/screenshots/`（17 张）、`docs/forge_runs.jsonl`、`docs/bench_silu.json`

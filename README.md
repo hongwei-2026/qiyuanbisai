@@ -162,7 +162,9 @@ python scripts/run_task.py --task silu --ntops-root /path/to/ntops --finish
 | Proposal | [docs/Proposal.md](docs/Proposal.md) |
 | .skill 初版 | [skills/ntops-forge/](skills/ntops-forge/) + [skills/ntops-copilot/](skills/ntops-copilot/) |
 | 自测计划 | [docs/SelfTestPlan.md](docs/SelfTestPlan.md) |
-| 中期报告 PDF | `docs/于鸿伟_九齿skill创新挑战_中期报告.pdf`（含 16 张实测附图） |
+| 中期报告 PDF | `docs/于鸿伟_九齿skill创新挑战_中期报告.pdf`（17 图） |
+| 评分对照 | [docs/ScoringAlignment.md](docs/ScoringAlignment.md) |
+| 四类自测 | [docs/selftests/](docs/selftests/) |
 | 功能演示 | [docs/DemoShowcase.md](docs/DemoShowcase.md) |
 | PR 描述模板 | [docs/PR_TEMPLATE.md](docs/PR_TEMPLATE.md)（对照组委会八项要求） |
 
@@ -184,7 +186,7 @@ skills/
   ntops-forge/          # 工厂流水线（主作品）
     SKILL.md, specs/, examples/, references/, tests/
   ntops-copilot/        # 轻量副驾驶
-    SKILL.md, tasks/, formulas.md
+    SKILL.md, tasks/, examples/, references/, tests/
 scripts/
   forge.py              # 主流水线 + gate
   run_ab_suite.py       # A/B 一键（Python）

@@ -9,7 +9,7 @@
 | 审计 | 无 | 可选 CSV | **jsonl 全链路** |
 | 一键验收 | 无 | run_task --finish | **forge gate 五算子** |
 | A/B 证据 | 无 | 少见 | **baseline 脚本 + csv + 报告** |
-| GPU 实测 | 少见 | 部分 | **16 张截图 + gate 日志** |
+| GPU 实测 | 少见 | 部分 | **17 张截图 + gate + benchmark** |
 
 ## 量化对比（本仓库实测）
 

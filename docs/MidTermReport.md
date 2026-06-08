@@ -20,7 +20,7 @@
 
 ## 摘要
 
-本作品交付 **ntops-forge**（v1.0，主作品）与 **ntops-copilot**（v0.5，轻量备选）双 Skill 套件，核心创新是将 Agent 写 ntops 算子的过程从「散文化手册」升级为 **PLAN→CODEGEN→GUARD→PROVE→SHIP 五段可执行工厂流水线**，配套 16+ 脚本、12 张 GPU 实测截图、jsonl 审计与 A/B 量化证据。
+本作品交付 **ntops-forge**（v1.0，主作品）与 **ntops-copilot**（v0.5，轻量备选）双 Skill 套件，核心创新是将 Agent 写 ntops 算子的过程从「散文化手册」升级为 **PLAN→CODEGEN→GUARD→PROVE→SHIP 五段可执行工厂流水线**，配套 16+ 脚本、17 张 GPU 实测截图、四类自测案例（ST1–ST4）、jsonl 审计与 A/B 量化证据。
 
 在 RTX 4080 环境，`forge gate` 一键验收 **五算子**（silu / add / gelu / relu / mul）：每算子 pytest 8/8 通过、单算子约 7 秒。`run_baseline_demo.py` 提供可复现无 Skill 基线证据；相对 Baseline，preflight 0%→100%，步骤 6→1，人工介入 4→0。
 
@@ -79,8 +79,9 @@
 
 | 路径 | 内容 |
 |------|------|
-| skills/ntops-forge/ | SKILL.md, specs/, taxonomy.md, fix_cards.md |
-| skills/ntops-copilot/ | SKILL.md, tasks/, formulas.md |
+| skills/ntops-forge/ | SKILL.md, specs/, examples/, references/, tests/, scripts/ |
+| skills/ntops-copilot/ | SKILL.md, tasks/, examples/, references/, tests/ |
+| docs/selftests/ | ST1–ST4 四类自测案例 |
 | scripts/ | forge.py 等 16 个可执行脚本 |
 | docs/screenshots/ | 17 张 GPU 实测截图（本报告附图，含 5v5 验收与 benchmark） |
 
@@ -296,7 +297,7 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 | 提交项 | 链接 |
 |--------|------|
 | Github | https://github.com/hongwei-2026/qiyuanbisai |
-| Commit | https://github.com/hongwei-2026/qiyuanbisai/commit/234f221 |
+| Commit | https://github.com/hongwei-2026/qiyuanbisai/commit/71cabaa |
 | 优化说明 | docs/OptimizationSummary.md |
 
 ---
@@ -306,8 +307,8 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 | 类型 | 初赛 | 证据 |
 |------|------|------|
 | 逐元素/广播 | ✅ 五算子 gate | 图15、AB_Report |
-| 归约/分块 | 📋 softmax spec | `specs/softmax.yaml`、`FinalsRoadmap.md` |
-| 布局 stride | 📋 max_pool2d spec | `specs/max_pool2d.yaml` |
+| 归约/分块 | ✅ ST2 PLAN+reference | `docs/selftests/ST2_softmax_reduce.md` |
+| 布局 stride | ✅ ST3 spec+pytest 设计 | `docs/selftests/ST3_max_pool2d_layout.md` |
 | 性能/诊断 | ✅ A/B 耗时 + silu benchmark | `bench_silu.json`、图17 |
 
 完整示例：`skills/ntops-forge/examples/silu_walkthrough.md`
@@ -316,11 +317,15 @@ Cursor 安装：`.cursor/skills/ntops-forge/`（主）+ `ntops-copilot/`（辅�
 
 **图17** silu 4096×4096 fp16：PyTorch 0.0523 ms vs ntops 0.0715 ms（ratio 1.37×，同量级无数量级回退）
 
-## 十四、后续可维护计划
+## 十四、初赛评分对照
 
-1. 决赛执行 softmax / max_pool2d PLAN→reference→pytest  
-2. 运行 `bench_op.py` 补充 silu kernel 计时材料  
-3. 对接组委会隐藏任务集，优化 SKILL 触发词  
+详见 `docs/ScoringAlignment.md`（Proposal 35 + skill 25 + 报告 25 + 合规 15）。
+
+## 十五、后续可维护计划
+
+1. 决赛 GPU 执行 ST2/ST3 pytest  
+2. 扩展 bench_op 多 shape / softmax  
+3. 对接隐藏任务集，优化 SKILL 触发词  
 
 ---
 

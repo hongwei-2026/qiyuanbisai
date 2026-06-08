@@ -21,6 +21,7 @@ Agent 不再拼凑零散命令，而是执行 **五段流水线**，每段有明
 | `examples/` | 完整示例 `silu_walkthrough.md` |
 | `references/` | 查阅索引（taxonomy、官方文档） |
 | `tests/` | skill 有效性验证说明 |
+| `scripts/README.md` | 可执行脚本索引（仓库 `scripts/`） |
 | `taxonomy.md` / `fix_cards.md` | 路由与失败诊断 |
 
 ## 与 copilot 的差异

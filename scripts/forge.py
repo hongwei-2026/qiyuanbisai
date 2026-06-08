@@ -27,7 +27,7 @@ FORGE_SPECS = ROOT / "skills" / "ntops-forge" / "specs"
 COPILOT_TASKS = ROOT / "skills" / "ntops-copilot" / "tasks"
 FORGE_LOG = ROOT / "docs" / "forge_runs.jsonl"
 
-COMPLEX_FAMILIES = frozenset({"reduction", "norm", "attention", "conv"})
+COMPLEX_FAMILIES = frozenset({"reduction", "norm", "attention", "conv", "pooling"})
 
 
 @dataclass

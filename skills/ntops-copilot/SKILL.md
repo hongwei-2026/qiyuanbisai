@@ -73,6 +73,18 @@ kernel(input, output)
 
 生成骨架时用：`--style ntops`（默认）。
 
+## 包结构
+
+| 目录 | 内容 |
+|------|------|
+| `SKILL.md` | 本文件 |
+| `tasks/` | 任务卡 YAML |
+| `examples/` | `add_walkthrough.md` |
+| `references/` | 查阅索引 |
+| `tests/` | 验证说明 |
+
+双 Skill 边界见 `docs/DualSkillGuide.md`。
+
 ## 标准工作流
 
 ### Step 0 — doctor
