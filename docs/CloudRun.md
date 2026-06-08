@@ -68,7 +68,55 @@ python scripts/forge.py gate --ntops-root /root/work/ntops
 
 ---
 
-## 4. 常见问题
+## 4. benchmark（云机无 bench_op.py 时）
+
+### 方式 A — git pull 后
+
+```bash
+cd /root/work/skill
+git pull origin main
+python scripts/bench_op.py --op silu --ntops-root /root/work/ntops
+cat docs/bench_silu.json
+```
+
+### 方式 B — 内联 Python（无需新脚本）
+
+```bash
+source /root/miniconda3/bin/activate base
+cd /root/work/skill
+python - <<'PY'
+import json, sys, time
+from datetime import datetime
+from pathlib import Path
+import torch
+import torch.nn.functional as F
+sys.path.insert(0, "/root/work/ntops/src")
+import ntops.torch as nt
+x = torch.randn(4096, 4096, device="cuda", dtype=torch.float16)
+def time_fn(fn):
+    for _ in range(10): fn()
+    torch.cuda.synchronize()
+    t0 = time.perf_counter()
+    for _ in range(50): fn()
+    torch.cuda.synchronize()
+    return (time.perf_counter() - t0) / 50 * 1000
+ref = time_fn(lambda: F.silu(x))
+nt_ms = time_fn(lambda: nt.silu(x))
+r = {
+    "op": "silu", "shape": [4096, 4096], "dtype": "float16",
+    "pytorch_ms": round(ref, 4), "ntops_ms": round(nt_ms, 4),
+    "ratio_ntops_over_pytorch": round(nt_ms / ref, 4),
+    "recorded_at": datetime.now().isoformat(timespec="seconds"),
+}
+print(json.dumps(r, indent=2))
+Path("docs/bench_silu.json").write_text(json.dumps(r, indent=2) + "\n")
+print("OK: wrote docs/bench_silu.json")
+PY
+```
+
+---
+
+## 5. 常见问题
 
 | 现象 | 处理 |
 |------|------|
