@@ -1,8 +1,11 @@
-# PR 描述模板（对照组委会提交要求）
+# PR 描述模板（提交到 InfiniTensor/ninetoothed）
 
-> 适用分支：`2026-spring-hongwei-2026-T3-1-1`  
-> 适用标题：`[2026春季][T3-1-1] hongwei-2026`  
-> 初赛阶段以独立仓库提交；本模板供后续向指定仓库提 PR 时使用。
+> **主仓库**：https://github.com/InfiniTensor/ninetoothed  
+> **CONTRIBUTING**：https://github.com/InfiniTensor/ninetoothed/blob/master/CONTRIBUTING.md  
+> **参考 PR**：https://github.com/InfiniTensor/ninetoothed/pull/159（同赛道 T3-1-1）  
+> **分支**：`2026-spring-hongwei-2026-T3-1-1`  
+> **标题**：`[2026春季][T3-1-1] hongwei-2026 — ntops-forge 九齿算子工厂`  
+> **完整步骤**：见 `docs/UpstreamPRGuide.md`；PR 正文可直接用仓库根目录 `PR_DESCRIPTION.md`。
 
 ---
 

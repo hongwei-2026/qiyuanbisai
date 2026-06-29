@@ -25,7 +25,13 @@
 | **Commit 链接** | `https://github.com/hongwei-2026/qiyuanbisai/commit/e7b32bb` |
 | **附件 zip** | `submission-initial-20260608.zip`（运行 `pack_submission.py` 可重新生成） |
 
-> 初赛**不需要 PR**。代码提交载体以后续赛题组通知为准；当前以**独立 skill 仓库 + commit + zip** 提交。
+> **2026-06 更新**：组委会通知需向 **NineToothed 主仓库** 提 PR，见 **[UpstreamPRGuide.md](UpstreamPRGuide.md)**。  
+> 初赛官网仍以 **独立 skill 仓库 + commit + zip** 为准；**两个渠道都要完成**。
+
+| 渠道 | 链接 |
+|------|------|
+| 官网 skill 仓库 | https://github.com/hongwei-2026/qiyuanbisai |
+| NineToothed PR | https://github.com/InfiniTensor/ninetoothed（fork 后提 PR） |
 
 ## 附件 zip 内含
 
